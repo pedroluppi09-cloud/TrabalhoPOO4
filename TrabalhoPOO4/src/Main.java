@@ -5,6 +5,8 @@ public class Main {
         int a = 2;
         int b = 2;
 
-        System.out.println(a*b);
+        int r = a*b;
+
+        System.out.println(r);
     }
 }
