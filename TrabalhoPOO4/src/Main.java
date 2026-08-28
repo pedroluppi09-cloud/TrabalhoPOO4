@@ -8,5 +8,6 @@ public class Main {
         int r = a*b;
 
         System.out.println(r);
+        System.out.println("jkgahbvuauiofhxui");
     }
 }
