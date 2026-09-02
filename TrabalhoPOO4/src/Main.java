@@ -11,7 +11,7 @@ public class Main {
 
         int r = a*b;
 
-        System.out.println(Math.pow(2, r));
+        System.out.println(Math.pow(r, 2));
         System.out.println("jkgahbvuauiofhxui");
 
         System.out.println("Bom dia, Boa tarde, Boa noite");
