@@ -7,5 +7,25 @@ public class Musica {
     private String nome;
     private String artista;
     private int notaAtual;
+    private Genero genero;
     private ArrayList<Avaliacao> Avaliacoes;
+
+    private static int geraId = 0;
+
+    public Musica(String nome, String artista, Genero genero) { // init / Cadastrar
+        id = geraId++;
+
+        this.nome = nome;
+        this.artista = artista;
+        this.genero = genero;
+
+        notaAtual = 0;
+        Avaliacoes = new ArrayList<>();
+    }
+
+    public void imprimir() {
+        System.out.println("Nome: " + nome);
+        System.out.println("Artista: " + artista);
+        System.out.println("Genero: " + genero);
+    }
 }
