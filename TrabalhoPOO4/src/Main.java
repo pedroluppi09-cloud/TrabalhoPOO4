@@ -9,5 +9,7 @@ public class Main {
         System.out.println("Usuários cadastrados (nome, senha): ");
         Ouvinte.imprimir();
         Admin.imprimir();
+
+        System.out.println("ronaldo");
     }
 }
