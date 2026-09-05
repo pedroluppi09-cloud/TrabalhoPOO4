@@ -23,6 +23,18 @@ public class Musica {
         Avaliacoes = new ArrayList<>();
     }
 
+    public Musica(Musica m) {
+        this.id = m.id;
+        this.nome = m.nome;
+        this.artista = m.artista;
+        this.notaAtual = m.notaAtual;
+        this.genero = m.genero;
+
+        this.Avaliacoes = new ArrayList<>();
+
+        for (int i = 0; i < )
+    }
+
     public void imprimir() {
         System.out.println("Nome: " + nome);
         System.out.println("Artista: " + artista);

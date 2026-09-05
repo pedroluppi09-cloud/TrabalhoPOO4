@@ -7,5 +7,4 @@ public class Avaliacao {
     private Usuario Usuario;
     private String descricao;
     private int nota;
-    private ArrayList<Playlist> Playlists;
 }
