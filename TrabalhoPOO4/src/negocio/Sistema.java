@@ -12,6 +12,6 @@ public class Sistema {
     }
 
     public void adicionarMusica(Musica M) {
-        controleMusica.add(M);
+        cMusica.add(M);
     }
 }

@@ -19,6 +19,12 @@ public class Usuario {
         }
     }
 
+    public Usuario(Usuario u) {
+        this.nome = u.nome;
+        this.funcao = u.funcao;
+        this.senha = u.senha;
+    }
+
     public void imprimir() {
         if (funcao == 'A') {
             System.out.println("Administrador: " + nome + ", " + senha);

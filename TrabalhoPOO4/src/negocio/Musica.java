@@ -32,12 +32,28 @@ public class Musica {
 
         this.Avaliacoes = new ArrayList<>();
 
-        for (int i = 0; i < )
+        for (int i = 0; i < m.Avaliacoes.size(); i++){
+            this.Avaliacoes.add(new Avaliacao(m.Avaliacoes.get(i)));
+        }
     }
 
-    public void imprimir() {
-        System.out.println("Nome: " + nome);
-        System.out.println("Artista: " + artista);
-        System.out.println("Genero: " + genero);
+    public String getNome() {
+        return nome;
+    }
+
+    public String getArtista() {
+        return artista;
+    }
+
+    public int getNotaAtual() {
+        return notaAtual;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Genero getGenero() {
+        return genero;
     }
 }

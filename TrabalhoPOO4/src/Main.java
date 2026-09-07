@@ -26,12 +26,11 @@ public class Main {
         for(int i = 0; i < 20; i++){
             M = new Musica(nomes[i], artista[i], genero[i/2]);
             S.adicionarMusica(M);
+            System.out.println("Musica adicionada com sucesso");
         }
 
         System.out.println("Usuários cadastrados (nome, senha): ");
         Ouvinte.imprimir();
         Admin.imprimir();
-
-
     }
 }
