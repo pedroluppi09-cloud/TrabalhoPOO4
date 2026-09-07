@@ -7,5 +7,6 @@ public class Playlist {
     private String nome;
     private String descricao;
     private ArrayList<Musica> musicas;
-    private Usuario Usuario;
+    private Usuario UsuarioCriou;
+    private ArrayList<Usuario> UsuariosCompartilhados;
 }

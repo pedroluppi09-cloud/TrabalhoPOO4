@@ -12,7 +12,7 @@ public class Main {
     static Scanner scn = new Scanner(System.in);
 
     static void main() {
-        Sistema S = new Sistema();
+        Sistema S = Sistema.getInstance();
         UIouvinte UIouvinte = new UIouvinte();
         UIadmin UIadmin = new UIadmin();
 
