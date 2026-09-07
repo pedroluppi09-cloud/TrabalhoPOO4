@@ -5,18 +5,10 @@ public class Usuario {
     private char funcao;
     private String senha;
 
-    public Usuario(char funcao) {
-        if (funcao == 'O'){
-            this.nome = "Ouvinte";
-            this.funcao = funcao;
-            this.senha = "1234";
-        }
-
-        if (funcao == 'A'){
-            this.nome = "Admin";
-            this.funcao = funcao;
-            this.senha = "5678";
-        }
+    public Usuario(String nome, String senha, char funcao) {
+        this.nome = nome;
+        this.funcao = funcao;
+        this.senha = senha;
     }
 
     public Usuario(Usuario u) {
@@ -33,5 +25,17 @@ public class Usuario {
         if (funcao == 'O') {
             System.out.println("Ouvinte: " + nome + ", " + senha);
         }
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public char getFuncao() {
+        return funcao;
+    }
+
+    public String getSenha() {
+        return senha;
     }
 }
