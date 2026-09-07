@@ -3,6 +3,7 @@ package ui;
 import negocio.Usuario;
 
 public class UImusicas {
-    public void menuInicial(Usuario u) {
+    public void menuInicial(char tipo) {
+
     }
 }

@@ -2,8 +2,7 @@ import negocio.Genero;
 import negocio.Musica;
 import negocio.Sistema;
 import negocio.Usuario;
-import ui.UIadmin;
-import ui.UIouvinte;
+import ui.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,8 +12,9 @@ public class Main {
 
     static void main() {
         Sistema S = Sistema.getInstance();
-        UIouvinte UIouvinte = new UIouvinte();
-        UIadmin UIadmin = new UIadmin();
+        UImusicas UImusicas = new UImusicas();
+        UIavaliacoes UIavaliacoes = new UIavaliacoes();
+        UIplaylists UIplaylists = new UIplaylists();
 
         ArrayList<Usuario> U = new ArrayList<>();
 
@@ -55,14 +55,14 @@ public class Main {
             switch (opcao){
                 case 1:
                     //Selecionar o Usuário
-                    String formato = "%-10s %-1s";
-                    System.out.printf(formato, "NOME", "FUNÇÃO");
+                    String formato = "%-4s %-10s %-1s";
+                    System.out.printf(formato, "ID", "NOME", "FUNÇÃO");
                     System.out.println();
                     for(int i = 0; i < U.size(); i++){
                         if (U.get(i).getFuncao() == 'O'){
-                            System.out.printf(formato, U.get(i).getNome(), "Ouvinte");
+                            System.out.printf(formato, U.get(i).getId(), U.get(i).getNome(), "Ouvinte");
                         } else {
-                            System.out.printf(formato, U.get(i).getNome(), "Administrador");
+                            System.out.printf(formato, U.get(i).getId(), U.get(i).getNome(), "Administrador");
                         }
                         System.out.println();
                     }
@@ -71,12 +71,12 @@ public class Main {
                     boolean existe = false;
                     Usuario Uatual = null;
 
-                    System.out.println("Selecione o usuário (digite o nome):");
+                    System.out.println("Selecione o usuário (digite o id):");
                     do {
-                        String nome = scn.next();
+                        int id = scn.nextInt();
 
                         for(int i = 0; i < U.size(); i++){
-                            if (U.get(i).getNome().equalsIgnoreCase(nome)){
+                            if (U.get(i).getId() == id){
                                 Uatual = U.get(i);
                                 existe = true;
                                 break;
@@ -96,17 +96,34 @@ public class Main {
 
                         if (senha.equals(Uatual.getSenha())){
                             senhaCorreta = true;
-                            System.out.println("Cadastro feito com sucesso");
                         } else {
                             System.out.println("Senha Incorreta");
                         }
                     } while (!senhaCorreta);
 
-                    if (Uatual.getFuncao() == 'O'){
-                        UIouvinte.menuInicial(Uatual);
-                    } else {
-                        UIadmin.menuInicial(Uatual);
-                    }
+                    System.out.println("--------------------------------------------");
+
+                    do {
+                        System.out.println("0 - SAIR");
+                        System.out.println("1 - Menu Músicas (" + Uatual.getFuncao() + ")");
+                        System.out.println("2 - Menu Playlists");
+                        System.out.println("3 - Menu Avaliações");
+                        opcao = scn.nextInt();
+
+                        switch (opcao) {
+                            case 1:
+                                UImusicas.menuInicial(Uatual.getFuncao());
+                                break;
+                            case 2:
+                                UIplaylists.menuInicial(Uatual, U);
+                                break;
+                            case 3:
+                                UIavaliacoes.menuInicial(Uatual);
+                                break;
+                            default:
+                                break;
+                        }
+                    } while (opcao != 0);
                     break;
                 default:
                     break;

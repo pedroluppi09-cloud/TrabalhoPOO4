@@ -1,17 +1,21 @@
 package negocio;
 
 public class Usuario {
+    private int id;
     private String nome;
     private char funcao;
     private String senha;
+    private static int geraId;
 
     public Usuario(String nome, String senha, char funcao) {
+        id = geraId++;
         this.nome = nome;
         this.funcao = funcao;
         this.senha = senha;
     }
 
     public Usuario(Usuario u) {
+        this.id = u.id;
         this.nome = u.nome;
         this.funcao = u.funcao;
         this.senha = u.senha;
@@ -36,6 +40,10 @@ public class Usuario {
     }
 
     public String getSenha() {
+        return senha;
+    }
+
+    public int getId() {
         return senha;
     }
 }
