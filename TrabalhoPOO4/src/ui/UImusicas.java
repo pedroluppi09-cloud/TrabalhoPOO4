@@ -5,7 +5,6 @@ import negocio.Musica;
 import negocio.Sistema;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class UImusicas {
@@ -15,6 +14,7 @@ public class UImusicas {
         int opcao = 0;
         Sistema S = Sistema.getInstance();
         Genero[] genero = {Genero.ROCK, Genero.BLUES, Genero.JAZZ, Genero.POP, Genero.SERTANEJO, Genero.HIPHOP, Genero.GOSPEL, Genero.ELETRO, Genero.MPB, Genero.HEAVYMETAL};
+        String formato = "%-4s %-25s %-25s %-15s %-1s";
 
         do {
             System.out.println("--------------------------------------------");
@@ -33,10 +33,11 @@ public class UImusicas {
             opcao = scn.nextInt();
             scn.nextLine();
 
+            System.out.println("--------------------------------------------");
+
             switch (opcao){
                 case 1: {
                     ArrayList<Musica> copia = S.pegarVetorMusicas();
-                    String formato = "%-4s %-20s %-20s %-5s %-1s";
 
                     if (copia.isEmpty()){
                         System.out.println("Nenhuma música cadastrada");
@@ -54,51 +55,142 @@ public class UImusicas {
                 }
                 case 2: {
                     ArrayList<Musica> copia = S.pegarVetorMusicas();
-                    String formato = "%-4s %-20s %-20s %-5s %-1s";
 
-                    System.out.println("Escolha 2 gêneros (nome). Digite '@' nos campos caso opite por somente 1 gênero ou nenhum gênero:");
-                    System.out.println("ROCK, BLUES, JAZZ, POP, SERTANEJO, HIPHOP, GOSPEL, ELETRO, MPB, HEAVYMETAL");
+                    if (copia.isEmpty()) {
+                        System.out.println("Nenhuma música cadastrada");
+                    } else {
+                        Genero genEnum = null;
+                        boolean generoValido = false;
 
-                    boolean existe;
+                        System.out.println("Escolha 1 gênero (nome):");
+                        System.out.println("ROCK, BLUES, JAZZ, POP, SERTANEJO, HIPHOP, GOSPEL, ELETRO, MPB, HEAVYMETAL");
 
-                    do {
-                        existe = false;
-                        System.out.println("Genero ");
-                        String gen1 = scn.next();
-                        String gen2 = scn.next();
+                        do {
+                            String gen = scn.nextLine();
 
-                        if (!gen1.equals("@")){
                             for (int i = 0; i < genero.length; i++){
-                                if (genero[i].name().equalsIgnoreCase(gen1)){
-                                    existe = true;
+                                if (genero[i].name().equalsIgnoreCase(gen)){
+                                    generoValido = true;
+                                    genEnum = genero[i];
                                     break;
                                 }
                             }
-                        }
 
-                        if (!gen2.equals("@")){
-                            for (int i = 0; i < genero.length; i++){
-                                if (genero[i].name().equalsIgnoreCase(gen2)){
-                                    existe = true;
-                                    break;
+                            if (generoValido){
+                                System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
+                                System.out.println();
+
+                                for (int i = 0; i < copia.size(); i++){
+                                    if (copia.get(i).getGenero().equals(genEnum)) {
+                                        System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
+                                                copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
+                                        System.out.println();
+                                    }
                                 }
                             }
-                        }
+                        } while (!generoValido);
 
-                        if (gen1.equals("@") && gen2.equals("@"))
-                            existe = true;
-
-                    } while (!existe);
-                    String gen1 = scn.next();
-                    String gen2 = scn.next();
-
-                    break;
+                        break;
+                    }
                 }
                 case 3: {
+                    ArrayList<Musica> copia = S.pegarVetorMusicas();
+                    String parte = "";
 
+                    if (copia.isEmpty()) {
+                        System.out.println("Nenhuma música cadastrada");
+                    } else {
+
+
+                        System.out.println("Insira uma tag para pesquisar");
+
+                        do {
+                            parte = scn.nextLine();
+
+                            if (parte.isEmpty()) {
+                                System.out.println("Insira um termo para a pesquisa");
+                            }
+                        } while (parte.isEmpty());
+
+                        ArrayList<Musica> resultado = new ArrayList<>();
+
+                        do {
+                            for (int i = 0; i < copia.size(); i++){
+                                if (copia.get(i).verPrefixoComum(parte, resultado)){
+                                    resultado.add(copia.get(i));
+                                }
+                            }
+
+                            String consParte = parte;
+                            parte = "";
+
+                            for (int i = 0; i < consParte.length() - 1; i++){
+                                parte += String.valueOf(consParte.charAt(i));
+                            }
+                        } while (!parte.isEmpty());
+
+                        if (resultado.isEmpty()){
+                            System.out.println("Nenhuma música encontrada");
+                        } else {
+                            System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
+                            System.out.println();
+
+                            for (int i = 0; i < resultado.size(); i++){
+                                System.out.printf(formato, resultado.get(i).getId(), resultado.get(i).getNome(), resultado.get(i).getArtista(),
+                                        resultado.get(i).getNotaAtual(), resultado.get(i).getGenero());
+                                System.out.println();
+                            }
+                        }
+
+                    }
+                    break;
                 }
                 case 4: {
+                    ArrayList<Musica> copia = S.pegarVetorMusicas();
+                    int opcaoMaiorMenor = 0;
+                    int nota;
+                    boolean teveTermo = false;
 
+                    do {
+                        System.out.println("Escolha entre:");
+                        System.out.println("0 - menor ou igual:");
+                        System.out.println("1 - maior ou igual:");
+                        opcaoMaiorMenor = scn.nextInt();
+                    } while (opcaoMaiorMenor != 0 && opcaoMaiorMenor != 1);
+
+                    do {
+                        System.out.println("Escolha a nota (entre 0 e 10):");
+                        nota = scn.nextInt();
+                    } while (nota < 0 || nota > 10);
+
+                    if (opcaoMaiorMenor == 1){
+                        S.sortearMusicaOrdemCcodigoCrescente(copia);
+                    } else {
+                        S.sortearMusicaOrdemCcodigoDecrescente(copia);
+                    }
+
+                    System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
+                    System.out.println();
+
+                    for (int i = 0; i < copia.size(); i++){
+                        if (opcaoMaiorMenor == 0 && copia.get(i).getNotaAtual() <= nota){
+                            System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
+                                    copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
+                            System.out.println();
+                            teveTermo = true;
+                        }
+
+                        if (opcaoMaiorMenor == 1 && copia.get(i).getNotaAtual() >= nota){
+                            System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
+                                    copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
+                            System.out.println();
+                            teveTermo = true;
+                        }
+                    }
+                    if (!teveTermo)
+                        System.out.println("Nenhuma musica encontrada com essa estatística");
+
+                    break;
                 }
                 case 5: {
                     if (tipo == 'A'){

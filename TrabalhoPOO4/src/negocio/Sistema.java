@@ -29,4 +29,32 @@ public class Sistema {
     public ArrayList<Musica> pegarVetorMusicas() {
         return cMusica.pegarVetor();
     }
+
+    public void sortearMusicaOrdemCcodigoCrescente(ArrayList<Musica> copia) {
+        Musica aux;
+
+        for (int i = 0; i < copia.size() - 1; i++) {
+            for (int j = 0; j < copia.size() - i - 1; j++) {
+                if (copia.get(j).getNotaAtual() > copia.get(j+1).getNotaAtual()) {
+                    aux = copia.get(j);
+                    copia.set(j, copia.get(j+1));
+                    copia.set(j+1, aux);
+                }
+            }
+        }
+    }
+
+    public void sortearMusicaOrdemCcodigoDecrescente(ArrayList<Musica> copia) {
+        Musica aux;
+
+        for (int i = 0; i < copia.size() - 1; i++) {
+            for (int j = 0; j < copia.size() - i - 1; j++) {
+                if (copia.get(j).getNotaAtual() < copia.get(j+1).getNotaAtual()) {
+                    aux = copia.get(j);
+                    copia.set(j, copia.get(j+1));
+                    copia.set(j+1, aux);
+                }
+            }
+        }
+    }
 }

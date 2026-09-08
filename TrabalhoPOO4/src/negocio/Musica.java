@@ -63,4 +63,33 @@ public class Musica {
     public Genero getGenero() {
         return genero;
     }
+
+    public boolean verPrefixoComum(String parte, ArrayList<Musica> resultado) {
+        String comparaParte = "";
+        boolean existe = false;
+
+        if (parte.length() <= nome.length()){
+            // Primeira parte: comparar a string
+            for (int i = 0; i < parte.length(); i++){
+                comparaParte += String.valueOf(nome.charAt(i));
+            }
+
+            if (comparaParte.equalsIgnoreCase(parte)){
+                // Segunda parte: ver se já está inserido em resultado
+
+                for (int i = 0; i < resultado.size(); i++){
+                    if (id == resultado.get(i).getId()){
+                        existe = true;
+                        break;
+                    }
+                }
+
+                return !existe;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }
