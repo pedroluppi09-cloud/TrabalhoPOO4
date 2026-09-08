@@ -1,5 +1,7 @@
 package negocio;
 
+import java.util.ArrayList;
+
 public class Sistema {
     private controlePlaylist cPlaylist;
     private controleMusica cMusica;
@@ -20,7 +22,11 @@ public class Sistema {
         return instance;
     }
 
-    public void adicionarMusica(Musica M) {
-        cMusica.add(M);
+    public boolean adicionarMusica(Musica M) {
+        return cMusica.add(M);
+    }
+
+    public ArrayList<Musica> pegarVetorMusicas() {
+        return cMusica.pegarVetor();
     }
 }

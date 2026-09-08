@@ -10,17 +10,16 @@ public class Musica {
     private Genero genero;
     private ArrayList<Avaliacao> Avaliacoes;
 
-    private static int geraId = 0;
+    private static int geraId = 1;
 
-    public Musica(String nome, String artista, Genero genero) { // init / Cadastrar
-        id = geraId++;
-
+    public Musica(String nome, String artista, Genero genero) {
+        this.id = geraId++;
         this.nome = nome;
         this.artista = artista;
         this.genero = genero;
 
-        notaAtual = 0;
-        Avaliacoes = new ArrayList<>();
+        this.notaAtual = 0;
+        this.Avaliacoes = new ArrayList<>();
     }
 
     public Musica(Musica m) {
@@ -34,6 +33,14 @@ public class Musica {
 
         for (int i = 0; i < m.Avaliacoes.size(); i++){
             this.Avaliacoes.add(new Avaliacao(m.Avaliacoes.get(i)));
+        }
+    }
+
+    public static Musica getInstance(String nome, String artista, Genero genero) {
+        if (nome.isEmpty() && artista.isEmpty() && genero == null){
+            return null;
+        } else {
+            return new Musica(nome, artista, genero);
         }
     }
 

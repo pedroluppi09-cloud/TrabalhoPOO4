@@ -36,17 +36,22 @@ public class Main {
 
         Genero[] genero = {Genero.ROCK, Genero.BLUES, Genero.JAZZ, Genero.POP, Genero.SERTANEJO, Genero.HIPHOP, Genero.GOSPEL, Genero.ELETRO, Genero.MPB, Genero.HEAVYMETAL};
 
-        for(int i = 0; i < 20; i++){
-            M = new Musica(nomes[i], artista[i], genero[i/2]);
-            S.adicionarMusica(M);
-        }
+        boolean adicionou;
 
-        System.out.println("--------------------------------------------");
+        for(int i = 0; i < 20; i++){
+            M = Musica.getInstance(nomes[i], artista[i], genero[i/2]);
+            adicionou = S.adicionarMusica(M);
+
+            if (!adicionou){
+                System.out.println("Erro no cadastro da música");
+            }
+        }
 
         // menu inicial
         int opcao = 0;
 
         do {
+            System.out.println("--------------------------------------------");
             System.out.println("0 - SAIR");
             System.out.println("1 - Selecionar Usuario");
             opcao = scn.nextInt();
@@ -102,15 +107,16 @@ public class Main {
                     } while (!senhaCorreta);
 
                     System.out.println("--------------------------------------------");
+                    int opcao2;
 
                     do {
                         System.out.println("0 - SAIR");
                         System.out.println("1 - Menu Músicas (" + Uatual.getFuncao() + ")");
                         System.out.println("2 - Menu Playlists");
                         System.out.println("3 - Menu Avaliações");
-                        opcao = scn.nextInt();
+                        opcao2 = scn.nextInt();
 
-                        switch (opcao) {
+                        switch (opcao2) {
                             case 1:
                                 UImusicas.menuInicial(Uatual.getFuncao());
                                 break;
@@ -123,7 +129,7 @@ public class Main {
                             default:
                                 break;
                         }
-                    } while (opcao != 0);
+                    } while (opcao2 != 0);
                     break;
                 default:
                     break;

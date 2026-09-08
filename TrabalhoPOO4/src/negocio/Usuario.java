@@ -5,7 +5,7 @@ public class Usuario {
     private String nome;
     private char funcao;
     private String senha;
-    private static int geraId;
+    private static int geraId = 1;
 
     public Usuario(String nome, String senha, char funcao) {
         id = geraId++;
@@ -44,6 +44,6 @@ public class Usuario {
     }
 
     public int getId() {
-        return senha;
+        return id;
     }
 }
