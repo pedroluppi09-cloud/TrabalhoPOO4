@@ -9,6 +9,7 @@ public class Musica {
     private int notaAtual;
     private Genero genero;
     private ArrayList<Avaliacao> Avaliacoes;
+    private boolean excluido;
 
     private static int geraId = 1;
 
@@ -20,6 +21,7 @@ public class Musica {
 
         this.notaAtual = 0;
         this.Avaliacoes = new ArrayList<>();
+        this.excluido = false;
     }
 
     public Musica(Musica m) {
@@ -28,6 +30,7 @@ public class Musica {
         this.artista = m.artista;
         this.notaAtual = m.notaAtual;
         this.genero = m.genero;
+        this.excluido = m.excluido;
 
         this.Avaliacoes = new ArrayList<>();
 
@@ -64,6 +67,21 @@ public class Musica {
         return genero;
     }
 
+    public void setNome(String nome) {
+        if (nome != null && !nome.isEmpty())
+            this.nome = nome;
+    }
+
+    public void setArtista(String artista) {
+        if (artista != null && !artista.isEmpty())
+            this.artista = artista;
+    }
+
+    public void setGenero(Genero genero) {
+        if (genero != null)
+            this.genero = genero;
+    }
+
     public boolean verPrefixoComum(String parte, ArrayList<Musica> resultado) {
         String comparaParte = "";
         boolean existe = false;
@@ -91,5 +109,23 @@ public class Musica {
         } else {
             return false;
         }
+    }
+
+    public ArrayList<Avaliacao> getAvaliacoes() {
+        ArrayList<Avaliacao> copia = new ArrayList<>();
+
+        for (int i = 0; i < Avaliacoes.size(); i++){
+            this.Avaliacoes.add(new Avaliacao(Avaliacoes.get(i)));
+        }
+
+        return copia;
+    }
+
+    public void setExcluido(boolean b) {
+        this.excluido = b;
+    }
+
+    public boolean isExcluido() {
+        return excluido;
     }
 }

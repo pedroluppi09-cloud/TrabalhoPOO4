@@ -36,7 +36,7 @@ public class UImusicas {
             System.out.println("--------------------------------------------");
 
             switch (opcao){
-                case 1: {
+                case 1: { // LISTAR TODAS AS MÚSICAS
                     ArrayList<Musica> copia = S.pegarVetorMusicas();
 
                     if (copia.isEmpty()){
@@ -46,14 +46,16 @@ public class UImusicas {
                         System.out.println();
 
                         for (int i = 0; i < copia.size(); i++){
-                            System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
-                                    copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
-                            System.out.println();
+                            if (!copia.get(i).isExcluido()){
+                                System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
+                                        copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
+                                System.out.println();
+                            }
                         }
                     }
                     break;
                 }
-                case 2: {
+                case 2: { // LISTAR TODAS AS MÚSICAS DE UM GÊNERO
                     ArrayList<Musica> copia = S.pegarVetorMusicas();
 
                     if (copia.isEmpty()) {
@@ -81,7 +83,7 @@ public class UImusicas {
                                 System.out.println();
 
                                 for (int i = 0; i < copia.size(); i++){
-                                    if (copia.get(i).getGenero().equals(genEnum)) {
+                                    if (!copia.get(i).isExcluido() && copia.get(i).getGenero().equals(genEnum)) {
                                         System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
                                                 copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
                                         System.out.println();
@@ -93,15 +95,13 @@ public class UImusicas {
                         break;
                     }
                 }
-                case 3: {
+                case 3: { // LISTAR TODAS AS MÚSICAS POR UM TERMO QUALQUER
                     ArrayList<Musica> copia = S.pegarVetorMusicas();
                     String parte = "";
 
                     if (copia.isEmpty()) {
                         System.out.println("Nenhuma música cadastrada");
                     } else {
-
-
                         System.out.println("Insira uma tag para pesquisar");
 
                         do {
@@ -116,7 +116,7 @@ public class UImusicas {
 
                         do {
                             for (int i = 0; i < copia.size(); i++){
-                                if (copia.get(i).verPrefixoComum(parte, resultado)){
+                                if (!copia.get(i).isExcluido() && copia.get(i).verPrefixoComum(parte, resultado)){
                                     resultado.add(copia.get(i));
                                 }
                             }
@@ -141,11 +141,10 @@ public class UImusicas {
                                 System.out.println();
                             }
                         }
-
                     }
                     break;
                 }
-                case 4: {
+                case 4: { // LISTAR TODAS AS MÚSICAS PELA NOTA
                     ArrayList<Musica> copia = S.pegarVetorMusicas();
                     int opcaoMaiorMenor = 0;
                     int nota;
@@ -173,18 +172,20 @@ public class UImusicas {
                     System.out.println();
 
                     for (int i = 0; i < copia.size(); i++){
-                        if (opcaoMaiorMenor == 0 && copia.get(i).getNotaAtual() <= nota){
-                            System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
-                                    copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
-                            System.out.println();
-                            teveTermo = true;
-                        }
+                        if (!copia.get(i).isExcluido()){
+                            if (opcaoMaiorMenor == 0 && copia.get(i).getNotaAtual() <= nota){
+                                System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
+                                        copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
+                                System.out.println();
+                                teveTermo = true;
+                            }
 
-                        if (opcaoMaiorMenor == 1 && copia.get(i).getNotaAtual() >= nota){
-                            System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
-                                    copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
-                            System.out.println();
-                            teveTermo = true;
+                            if (opcaoMaiorMenor == 1 && copia.get(i).getNotaAtual() >= nota){
+                                System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
+                                        copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
+                                System.out.println();
+                                teveTermo = true;
+                            }
                         }
                     }
                     if (!teveTermo)
@@ -192,7 +193,7 @@ public class UImusicas {
 
                     break;
                 }
-                case 5: {
+                case 5: { // CADASTRAR MÚSICAS
                     if (tipo == 'A'){
                         String nome = "", artista = "", gen = "";
                         Genero genEnum = null;
@@ -239,15 +240,123 @@ public class UImusicas {
                     }
                     break;
                 }
-                case 6: {
+                case 6: { // EDITAR MÚSICAS
                     if (tipo == 'A'){
+                        boolean existe = false;
+                        int idMusica;
+                        int consi = 0;
+                        Musica musicaEsc = null;
+                        ArrayList<Musica> copia = S.pegarVetorMusicas();
 
+                        System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
+                        System.out.println();
+
+                        for (int i = 0; i < copia.size(); i++){
+                            System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
+                                    copia.get(i).getNotaAtual(), copia.get(i).getGenero());
+                            System.out.println();
+                        }
+
+                        System.out.println("Insira o ID da música que deseja alterar");
+
+                        do {
+                            idMusica = scn.nextInt();
+
+                            for (int i = 0; i < copia.size(); i++){
+                                if (idMusica == copia.get(i).getId()){
+                                    musicaEsc = copia.get(i);
+                                    consi = i;
+                                    existe = true;
+                                    break;
+                                }
+                            }
+
+                            if (!existe)
+                                System.out.println("Insira um ID válido");
+
+                        } while (!existe);
+
+                        boolean alterou = false;
+
+                        do {
+                            boolean generoValido = false;
+                            Genero genEnum = null;
+
+                            System.out.println("Nome [" + musicaEsc.getNome() + "]:");
+                            String nome = scn.nextLine();
+
+                            System.out.println("Artista [" + musicaEsc.getArtista() + "]:");
+                            String artista = scn.nextLine();
+
+                            System.out.println("Genero [" + musicaEsc.getGenero().name() + "]");
+                            System.out.println("ROCK, BLUES, JAZZ, POP, SERTANEJO, HIPHOP, GOSPEL, ELETRO, MPB, HEAVYMETAL");
+                            String gen = scn.nextLine();
+
+                            for (int i = 0; i < genero.length; i++){
+                                if (genero[i].name().equalsIgnoreCase(gen)){
+                                    generoValido = true;
+                                    genEnum = genero[i];
+                                    break;
+                                }
+                            }
+
+                            if (generoValido){
+                                musicaEsc.setNome(nome);
+                                musicaEsc.setArtista(artista);
+                                musicaEsc.setGenero(genEnum);
+
+                                alterou = S.alterarMusica(musicaEsc, consi);
+
+                                if (!alterou)
+                                    System.out.println("Não foi possível editar a música. Ela possui nome e artista repetidos");
+                            }
+
+                        } while (!alterou);
                     }
                     break;
                 }
-                case 7: {
-                    if (tipo == 'A'){
+                case 7: { // EXCLUIR MÚSICAS
+                    if (tipo == 'A') {
+                        boolean excluiu = false;
+                        boolean existe = false;
+                        int idMusica;
+                        int consi = 0;
+                        ArrayList<Musica> copia = S.pegarVetorMusicas();
 
+                        System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
+                        System.out.println();
+
+                        for (int i = 0; i < copia.size(); i++) {
+                            System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
+                                    copia.get(i).getNotaAtual(), copia.get(i).getGenero());
+                            System.out.println();
+                        }
+
+                        System.out.println("Insira o ID da música que deseja alterar");
+
+                        do {
+                            idMusica = scn.nextInt();
+
+                            for (int i = 0; i < copia.size(); i++) {
+                                if (idMusica == copia.get(i).getId()) {
+                                    consi = i;
+                                    existe = true;
+                                    break;
+                                }
+                            }
+
+                            if (!existe)
+                                System.out.println("Insira um ID válido");
+
+                        } while (!existe);
+
+                        excluiu = S.excluirMusica(consi);
+
+                        if (!excluiu) {
+                            System.out.println("Ocorreu algum erro na exclusão");
+                        } else {
+                            System.out.println("Registro excluido com sucesso");
+                        }
                     }
                     break;
                 }

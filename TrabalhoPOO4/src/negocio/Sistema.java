@@ -57,4 +57,12 @@ public class Sistema {
             }
         }
     }
+
+    public boolean alterarMusica(Musica musicaEsc, int consi) {
+        return cMusica.alterar(musicaEsc, consi);
+    }
+
+    public boolean excluirMusica(int consi) {
+        return cMusica.excluir(consi);
+    }
 }
