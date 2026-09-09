@@ -35,10 +35,9 @@ public class UImusicas {
 
             System.out.println("--------------------------------------------");
 
+            ArrayList<Musica> copia = S.pegarVetorMusicas();
             switch (opcao){
                 case 1: { // LISTAR TODAS AS MÚSICAS
-                    ArrayList<Musica> copia = S.pegarVetorMusicas();
-
                     if (copia.isEmpty()){
                         System.out.println("Nenhuma música cadastrada");
                     } else {
@@ -47,8 +46,7 @@ public class UImusicas {
 
                         for (int i = 0; i < copia.size(); i++){
                             if (!copia.get(i).isExcluido()){
-                                System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
-                                        copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
+                                copia.get(i).imprimirColuna(formato);
                                 System.out.println();
                             }
                         }
@@ -56,8 +54,6 @@ public class UImusicas {
                     break;
                 }
                 case 2: { // LISTAR TODAS AS MÚSICAS DE UM GÊNERO
-                    ArrayList<Musica> copia = S.pegarVetorMusicas();
-
                     if (copia.isEmpty()) {
                         System.out.println("Nenhuma música cadastrada");
                     } else {
@@ -84,19 +80,16 @@ public class UImusicas {
 
                                 for (int i = 0; i < copia.size(); i++){
                                     if (!copia.get(i).isExcluido() && copia.get(i).getGenero().equals(genEnum)) {
-                                        System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
-                                                copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
+                                        copia.get(i).imprimirColuna(formato);
                                         System.out.println();
                                     }
                                 }
                             }
                         } while (!generoValido);
-
-                        break;
                     }
+                    break;
                 }
                 case 3: { // LISTAR TODAS AS MÚSICAS POR UM TERMO QUALQUER
-                    ArrayList<Musica> copia = S.pegarVetorMusicas();
                     String parte = "";
 
                     if (copia.isEmpty()) {
@@ -136,8 +129,7 @@ public class UImusicas {
                             System.out.println();
 
                             for (int i = 0; i < resultado.size(); i++){
-                                System.out.printf(formato, resultado.get(i).getId(), resultado.get(i).getNome(), resultado.get(i).getArtista(),
-                                        resultado.get(i).getNotaAtual(), resultado.get(i).getGenero());
+                                resultado.get(i).imprimirColuna(formato);
                                 System.out.println();
                             }
                         }
@@ -145,7 +137,6 @@ public class UImusicas {
                     break;
                 }
                 case 4: { // LISTAR TODAS AS MÚSICAS PELA NOTA
-                    ArrayList<Musica> copia = S.pegarVetorMusicas();
                     int opcaoMaiorMenor = 0;
                     int nota;
                     boolean teveTermo = false;
@@ -174,15 +165,13 @@ public class UImusicas {
                     for (int i = 0; i < copia.size(); i++){
                         if (!copia.get(i).isExcluido()){
                             if (opcaoMaiorMenor == 0 && copia.get(i).getNotaAtual() <= nota){
-                                System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
-                                        copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
+                                copia.get(i).imprimirColuna(formato);
                                 System.out.println();
                                 teveTermo = true;
                             }
 
                             if (opcaoMaiorMenor == 1 && copia.get(i).getNotaAtual() >= nota){
-                                System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
-                                        copia.get(i).getNotaAtual() + "/10", copia.get(i).getGenero());
+                                copia.get(i).imprimirColuna(formato);
                                 System.out.println();
                                 teveTermo = true;
                             }
@@ -197,11 +186,12 @@ public class UImusicas {
                     if (tipo == 'A'){
                         String nome = "", artista = "", gen = "";
                         Genero genEnum = null;
-                        Musica M = null;
-                        boolean generoValido = false;
                         boolean adicionou = false;
 
                         do {
+                            Musica M = null;
+                            boolean generoValido = false;
+
                             System.out.println("Nome:");
                             nome = scn.nextLine();
 
@@ -246,14 +236,12 @@ public class UImusicas {
                         int idMusica;
                         int consi = 0;
                         Musica musicaEsc = null;
-                        ArrayList<Musica> copia = S.pegarVetorMusicas();
 
                         System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
                         System.out.println();
 
                         for (int i = 0; i < copia.size(); i++){
-                            System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
-                                    copia.get(i).getNotaAtual(), copia.get(i).getGenero());
+                            copia.get(i).imprimirColuna(formato);
                             System.out.println();
                         }
 
@@ -276,6 +264,7 @@ public class UImusicas {
 
                         } while (!existe);
 
+                        scn.nextLine();
                         boolean alterou = false;
 
                         do {
@@ -321,14 +310,12 @@ public class UImusicas {
                         boolean existe = false;
                         int idMusica;
                         int consi = 0;
-                        ArrayList<Musica> copia = S.pegarVetorMusicas();
 
                         System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
                         System.out.println();
 
                         for (int i = 0; i < copia.size(); i++) {
-                            System.out.printf(formato, copia.get(i).getId(), copia.get(i).getNome(), copia.get(i).getArtista(),
-                                    copia.get(i).getNotaAtual(), copia.get(i).getGenero());
+                            copia.get(i).imprimirColuna(formato);
                             System.out.println();
                         }
 

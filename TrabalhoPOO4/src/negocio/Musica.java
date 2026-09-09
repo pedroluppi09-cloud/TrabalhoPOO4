@@ -128,4 +128,8 @@ public class Musica {
     public boolean isExcluido() {
         return excluido;
     }
+
+    public void imprimirColuna(String formato) {
+        System.out.printf(formato, id, nome, artista, notaAtual + "/10", genero);
+    }
 }
