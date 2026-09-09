@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UIavaliacoes {
-    Scanner scn = new Scanner(System.in);
+    static Scanner scn = new Scanner(System.in);
 
     public void menuInicial(Usuario u) {
         int opcao;
@@ -39,31 +39,6 @@ public class UIavaliacoes {
                     break;
                 }
                 case 5: {
-                    System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
-                    System.out.println();
-
-                    for (int i = 0; i < copia.size(); i++) {
-                        copia.get(i).imprimirColuna(formato);
-                        System.out.println();
-                    }
-
-                    System.out.println("Insira o ID da música que deseja alterar");
-
-                    do {
-                        idMusica = scn.nextInt();
-
-                        for (int i = 0; i < copia.size(); i++) {
-                            if (idMusica == copia.get(i).getId()) {
-                                consi = i;
-                                existe = true;
-                                break;
-                            }
-                        }
-
-                        if (!existe)
-                            System.out.println("Insira um ID válido");
-
-                    } while (!existe);
                     break;
                 }
                 default: {
