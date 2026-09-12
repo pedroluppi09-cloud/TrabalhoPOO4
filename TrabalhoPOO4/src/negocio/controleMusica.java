@@ -35,15 +35,22 @@ public class controleMusica {
         }
     }
 
-    public boolean excluir(int consi) {
-        Musica m = rMusica.pegarMusicaPelaPosicao(consi);
+    public boolean excluir(int id, ArrayList<Avaliacao> Av) {
+        boolean temAvaliacao = false;
 
-        if (m.getAvaliacoes().isEmpty()){
-            rMusica.delete(consi, 'D'); //definitivo
-            return true;
-        } else {
-            rMusica.delete(consi, 'S'); //softdelete
-            return true;
+        for (int i = 0; i < Av.size(); i++){
+            if (Av.get(i).getMusica().getId() == id){
+                temAvaliacao = true;
+                break;
+            }
         }
+
+        if (!temAvaliacao){
+            rMusica.delete(id, 'D'); //delete padrao
+        } else {
+            rMusica.delete(id, 'S'); //soft delete
+        }
+
+        return true;
     }
 }

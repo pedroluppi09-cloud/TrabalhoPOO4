@@ -53,17 +53,19 @@ public class repositorioMusica {
         return NomeEArtistaRepete;
     }
 
-    public void delete(int i, char tipo) {
-        if (tipo == 'D'){
-            musicas.remove(i);
-        }
+    public void delete(int id, char tipo) {
+        for (int i = 0; i < musicas.size(); i++) {
+            if (musicas.get(i).getId() == id){
+                if (tipo == 'D'){
+                    musicas.remove(i);
+                    break;
+                }
 
-        if (tipo == 'S'){
-            musicas.get(i).setExcluido(true);
+                if (tipo == 'S'){
+                    musicas.get(i).setExcluido(true);
+                    break;
+                }
+            }
         }
-    }
-
-    public Musica pegarMusicaPelaPosicao(int i){
-        return musicas.get(i);
     }
 }

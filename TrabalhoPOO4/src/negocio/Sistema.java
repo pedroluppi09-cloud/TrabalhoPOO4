@@ -62,7 +62,51 @@ public class Sistema {
         return cMusica.alterar(musicaEsc, consi);
     }
 
-    public boolean excluirMusica(int consi) {
-        return cMusica.excluir(consi);
+    public boolean excluirMusica(int id) {
+        ArrayList<Avaliacao> copiaA = pegarVetorAvaliacoes();
+        return cMusica.excluir(id, copiaA);
+    }
+
+    public ArrayList<Avaliacao> pegarVetorAvaliacoes() {
+        return cAvaliacao.pegarVetor();
+    }
+
+    public ArrayList<Musica> pegarMusicasNaoAvaliadas(Usuario U, ArrayList<Musica> copiaM) {
+        ArrayList<Avaliacao> copiaA = pegarVetorAvaliacoes();
+        ArrayList<Musica> naoAvaliadas = new ArrayList<>();
+
+        for (int i = 0; i < copiaM.size(); i++){
+            boolean avaliadaPeloUsuario = false;
+
+            for (int j = 0; j < copiaA.size(); j++) {
+                if (copiaA.get(i).getMusica().getId() == copiaM.get(i).getId() &&
+                        copiaA.get(i).getUsuario().getId() == U.getId()) {
+                    avaliadaPeloUsuario = true;
+                    break;
+                }
+            }
+
+            if (!avaliadaPeloUsuario) {
+                naoAvaliadas.add(copiaM.get(i));
+            }
+        }
+
+        return naoAvaliadas;
+    }
+
+    public void exibirMusicas(ArrayList<Musica> musicas) {
+        String formato = "%-4s %-25s %-25s %-15s %-1s";
+
+        System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
+        System.out.println();
+
+        for (int i = 0; i < musicas.size(); i++){
+            musicas.get(i).imprimirColuna(formato);
+            System.out.println();
+        }
+    }
+
+    public void adicionarAvaliacao(Avaliacao A) {
+        cAvaliacao.add(A);
     }
 }

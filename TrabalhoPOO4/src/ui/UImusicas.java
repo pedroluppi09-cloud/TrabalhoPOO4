@@ -14,7 +14,6 @@ public class UImusicas {
         int opcao = 0;
         Sistema S = Sistema.getInstance();
         Genero[] genero = {Genero.ROCK, Genero.BLUES, Genero.JAZZ, Genero.POP, Genero.SERTANEJO, Genero.HIPHOP, Genero.GOSPEL, Genero.ELETRO, Genero.MPB, Genero.HEAVYMETAL};
-        String formato = "%-4s %-25s %-25s %-15s %-1s";
 
         do {
             System.out.println("--------------------------------------------");
@@ -41,15 +40,7 @@ public class UImusicas {
                     if (copia.isEmpty()){
                         System.out.println("Nenhuma música cadastrada");
                     } else {
-                        System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
-                        System.out.println();
-
-                        for (int i = 0; i < copia.size(); i++){
-                            if (!copia.get(i).isExcluido()){
-                                copia.get(i).imprimirColuna(formato);
-                                System.out.println();
-                            }
-                        }
+                        S.exibirMusicas(copia);
                     }
                     break;
                 }
@@ -62,6 +53,7 @@ public class UImusicas {
 
                         System.out.println("Escolha 1 gênero (nome):");
                         System.out.println("ROCK, BLUES, JAZZ, POP, SERTANEJO, HIPHOP, GOSPEL, ELETRO, MPB, HEAVYMETAL");
+                        ArrayList<Musica> musicasGenero = new ArrayList<>();
 
                         do {
                             String gen = scn.nextLine();
@@ -75,17 +67,19 @@ public class UImusicas {
                             }
 
                             if (generoValido){
-                                System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
-                                System.out.println();
-
                                 for (int i = 0; i < copia.size(); i++){
                                     if (!copia.get(i).isExcluido() && copia.get(i).getGenero().equals(genEnum)) {
-                                        copia.get(i).imprimirColuna(formato);
-                                        System.out.println();
+                                        musicasGenero.add(copia.get(i));
                                     }
                                 }
                             }
                         } while (!generoValido);
+
+                        if (copia.isEmpty()){
+                            System.out.println("Nenhuma musica do genero inserido existe");
+                        } else {
+                            S.exibirMusicas(musicasGenero);
+                        }
                     }
                     break;
                 }
@@ -105,12 +99,12 @@ public class UImusicas {
                             }
                         } while (parte.isEmpty());
 
-                        ArrayList<Musica> resultado = new ArrayList<>();
+                        ArrayList<Musica> musicasParte = new ArrayList<>();
 
                         do {
                             for (int i = 0; i < copia.size(); i++){
-                                if (!copia.get(i).isExcluido() && copia.get(i).verPrefixoComum(parte, resultado)){
-                                    resultado.add(copia.get(i));
+                                if (!copia.get(i).isExcluido() && copia.get(i).verPrefixoComum(parte, musicasParte)){
+                                    musicasParte.add(copia.get(i));
                                 }
                             }
 
@@ -122,16 +116,10 @@ public class UImusicas {
                             }
                         } while (!parte.isEmpty());
 
-                        if (resultado.isEmpty()){
+                        if (musicasParte.isEmpty()){
                             System.out.println("Nenhuma música encontrada");
                         } else {
-                            System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
-                            System.out.println();
-
-                            for (int i = 0; i < resultado.size(); i++){
-                                resultado.get(i).imprimirColuna(formato);
-                                System.out.println();
-                            }
+                            S.exibirMusicas(musicasParte);
                         }
                     }
                     break;
@@ -139,46 +127,48 @@ public class UImusicas {
                 case 4: { // LISTAR TODAS AS MÚSICAS PELA NOTA
                     int opcaoMaiorMenor = 0;
                     int nota;
-                    boolean teveTermo = false;
 
-                    do {
-                        System.out.println("Escolha entre:");
-                        System.out.println("0 - menor ou igual:");
-                        System.out.println("1 - maior ou igual:");
-                        opcaoMaiorMenor = scn.nextInt();
-                    } while (opcaoMaiorMenor != 0 && opcaoMaiorMenor != 1);
-
-                    do {
-                        System.out.println("Escolha a nota (entre 0 e 10):");
-                        nota = scn.nextInt();
-                    } while (nota < 0 || nota > 10);
-
-                    if (opcaoMaiorMenor == 1){
-                        S.sortearMusicaOrdemCcodigoCrescente(copia);
+                    if (copia.isEmpty()) {
+                        System.out.println("Nenhuma música cadastrada");
                     } else {
-                        S.sortearMusicaOrdemCcodigoDecrescente(copia);
-                    }
+                        do {
+                            System.out.println("Escolha entre:");
+                            System.out.println("0 - menor ou igual:");
+                            System.out.println("1 - maior ou igual:");
+                            opcaoMaiorMenor = scn.nextInt();
+                        } while (opcaoMaiorMenor != 0 && opcaoMaiorMenor != 1);
 
-                    System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
-                    System.out.println();
+                        do {
+                            System.out.println("Escolha a nota (entre 0 e 10):");
+                            nota = scn.nextInt();
+                        } while (nota < 0 || nota > 10);
 
-                    for (int i = 0; i < copia.size(); i++){
-                        if (!copia.get(i).isExcluido()){
-                            if (opcaoMaiorMenor == 0 && copia.get(i).getNotaAtual() <= nota){
-                                copia.get(i).imprimirColuna(formato);
-                                System.out.println();
-                                teveTermo = true;
-                            }
+                        if (opcaoMaiorMenor == 1){
+                            S.sortearMusicaOrdemCcodigoCrescente(copia);
+                        } else {
+                            S.sortearMusicaOrdemCcodigoDecrescente(copia);
+                        }
 
-                            if (opcaoMaiorMenor == 1 && copia.get(i).getNotaAtual() >= nota){
-                                copia.get(i).imprimirColuna(formato);
-                                System.out.println();
-                                teveTermo = true;
+                        ArrayList<Musica> musicasNota = new ArrayList<>();
+
+                        for (int i = 0; i < copia.size(); i++){
+                            if (!copia.get(i).isExcluido()){
+                                if (opcaoMaiorMenor == 0 && copia.get(i).getNotaAtual() <= nota){
+                                    musicasNota.add(copia.get(i));
+                                }
+
+                                if (opcaoMaiorMenor == 1 && copia.get(i).getNotaAtual() >= nota){
+                                    musicasNota.add(copia.get(i));
+                                }
                             }
                         }
+
+                        if (musicasNota.isEmpty()){
+                            System.out.println("Nenhuma música encontrada");
+                        } else {
+                            S.exibirMusicas(musicasNota);
+                        }
                     }
-                    if (!teveTermo)
-                        System.out.println("Nenhuma musica encontrada com essa estatística");
 
                     break;
                 }
@@ -237,14 +227,7 @@ public class UImusicas {
                         int consi = 0;
                         Musica musicaEsc = null;
 
-                        System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
-                        System.out.println();
-
-                        for (int i = 0; i < copia.size(); i++){
-                            copia.get(i).imprimirColuna(formato);
-                            System.out.println();
-                        }
-
+                        S.exibirMusicas(copia);
                         System.out.println("Insira o ID da música que deseja alterar");
 
                         do {
@@ -309,16 +292,9 @@ public class UImusicas {
                         boolean excluiu = false;
                         boolean existe = false;
                         int idMusica;
-                        int consi = 0;
+                        Musica musicaEsc = null;
 
-                        System.out.printf(formato, "ID", "NOME", "ARTISTA", "NOTA ATUAL", "GENERO");
-                        System.out.println();
-
-                        for (int i = 0; i < copia.size(); i++) {
-                            copia.get(i).imprimirColuna(formato);
-                            System.out.println();
-                        }
-
+                        S.exibirMusicas(copia);
                         System.out.println("Insira o ID da música que deseja alterar");
 
                         do {
@@ -326,8 +302,7 @@ public class UImusicas {
 
                             for (int i = 0; i < copia.size(); i++) {
                                 if (idMusica == copia.get(i).getId()) {
-                                    consi = i;
-                                    existe = true;
+                                    musicaEsc = copia.get(i);
                                     break;
                                 }
                             }
@@ -337,7 +312,7 @@ public class UImusicas {
 
                         } while (!existe);
 
-                        excluiu = S.excluirMusica(consi);
+                        excluiu = S.excluirMusica(musicaEsc.getId());
 
                         if (!excluiu) {
                             System.out.println("Ocorreu algum erro na exclusão");

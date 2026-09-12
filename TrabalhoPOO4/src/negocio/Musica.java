@@ -8,7 +8,6 @@ public class Musica {
     private String artista;
     private int notaAtual;
     private Genero genero;
-    private ArrayList<Avaliacao> Avaliacoes;
     private boolean excluido;
 
     private static int geraId = 1;
@@ -20,7 +19,6 @@ public class Musica {
         this.genero = genero;
 
         this.notaAtual = 0;
-        this.Avaliacoes = new ArrayList<>();
         this.excluido = false;
     }
 
@@ -31,12 +29,6 @@ public class Musica {
         this.notaAtual = m.notaAtual;
         this.genero = m.genero;
         this.excluido = m.excluido;
-
-        this.Avaliacoes = new ArrayList<>();
-
-        for (int i = 0; i < m.Avaliacoes.size(); i++){
-            this.Avaliacoes.add(new Avaliacao(m.Avaliacoes.get(i)));
-        }
     }
 
     public static Musica getInstance(String nome, String artista, Genero genero) {
@@ -109,16 +101,6 @@ public class Musica {
         } else {
             return false;
         }
-    }
-
-    public ArrayList<Avaliacao> getAvaliacoes() {
-        ArrayList<Avaliacao> copia = new ArrayList<>();
-
-        for (int i = 0; i < Avaliacoes.size(); i++){
-            this.Avaliacoes.add(new Avaliacao(Avaliacoes.get(i)));
-        }
-
-        return copia;
     }
 
     public void setExcluido(boolean b) {
