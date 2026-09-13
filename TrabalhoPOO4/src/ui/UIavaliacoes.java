@@ -25,9 +25,11 @@ public class UIavaliacoes {
             System.out.println("5 - Listar avaliações de uma música");
             opcao = scn.nextInt();
 
-            ArrayList<Musica> copiaM = S.pegarVetorMusicas();
+
             switch (opcao){
                 case 1: { // FAZER AVALIAÇÃO DE MÚSICA
+                    ArrayList<Musica> copiaM = S.pegarVetorMusicas();
+
                     if (copiaM.isEmpty()){
                         System.out.println("Nenhuma música cadastrada");
                     } else {
@@ -90,7 +92,7 @@ public class UIavaliacoes {
                     if (AvFeitasPorUsuario.isEmpty()){
                         System.out.println("Nenhuma avaliação feita pelo usuário");
                     } else {
-                        S.exibirAvaliacoes(AvFeitasPorUsuario);
+                        S.exibirAvaliacoes(AvFeitasPorUsuario, true);
                         System.out.println("Insira o ID da avaliação que deseja editar");
 
                         int idAvaliacao;
@@ -139,7 +141,7 @@ public class UIavaliacoes {
                     if (AvFeitasPorUsuario.isEmpty()){
                         System.out.println("Nenhuma avaliação feita pelo usuário");
                     } else {
-                        S.exibirAvaliacoes(AvFeitasPorUsuario);
+                        S.exibirAvaliacoes(AvFeitasPorUsuario, true);
                         System.out.println("Insira o ID da avaliação que deseja editar");
 
                         int idAvaliacao;
@@ -173,11 +175,47 @@ public class UIavaliacoes {
                     if (AvFeitasPorUsuario.isEmpty()){
                         System.out.println("Nenhuma avaliação feita pelo usuário");
                     } else {
-                        S.exibirAvaliacoes(AvFeitasPorUsuario);
+                        S.exibirAvaliacoes(AvFeitasPorUsuario, true);
                     }
                     break;
                 }
                 case 5: {
+                    ArrayList<Musica> copiaM = S.pegarVetorMusicas();
+
+                    if (copiaM.isEmpty()){
+                        System.out.println("Nenhuma música cadastrada");
+                    } else {
+                        S.exibirMusicas(copiaM);
+                        System.out.println("Insira o ID da musica que deseja ver as avaliações");
+                    }
+
+                    int idMusica;
+                    Musica musicaEsc = null;
+                    boolean existe = false;
+
+                    do {
+                        idMusica = scn.nextInt();
+
+                        for (int i = 0; i < copiaM.size(); i++) {
+                            if (idMusica == copiaM.get(i).getId()) {
+                                musicaEsc = copiaM.get(i);
+                                existe = true;
+                                break;
+                            }
+                        }
+
+                        if (!existe)
+                            System.out.println("Insira um ID válido");
+
+                    } while (!existe);
+
+                    ArrayList<Avaliacao> avaliacoesMusica = S.pegarAvaliacoesMusica(musicaEsc);
+
+                    if (avaliacoesMusica.isEmpty()){
+                        System.out.println("Nenhuma avaliação da música foi feita");
+                    } else {
+                        S.exibirAvaliacoes(avaliacoesMusica, false);
+                    }
                     break;
                 }
                 default: {

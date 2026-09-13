@@ -135,9 +135,15 @@ public class Sistema {
         return avaliacoesUs;
     }
 
-    public void exibirAvaliacoes(ArrayList<Avaliacao> avFeitasPorUsuario) {
+    public void exibirAvaliacoes(ArrayList<Avaliacao> avFeitasPorUsuario, boolean listarMusica) {
         for (int i = 0; i < avFeitasPorUsuario.size(); i++){
-            System.out.println("ID " + avFeitasPorUsuario.get(i).getId() + " | " + avFeitasPorUsuario.get(i).getUsuario().getNome());
+            if (listarMusica){
+                System.out.println("ID " + avFeitasPorUsuario.get(i).getId() + " | " + avFeitasPorUsuario.get(i).getUsuario().getNome()
+                        + " | " + avFeitasPorUsuario.get(i).getMusica().getNome());
+            } else {
+                System.out.println("ID " + avFeitasPorUsuario.get(i).getId() + " | " + avFeitasPorUsuario.get(i).getUsuario().getNome());
+            }
+
             System.out.println("NOTA: " + avFeitasPorUsuario.get(i).getNota() + "/10");
             System.out.println("DESCRICAO: " + avFeitasPorUsuario.get(i).getDescricao());
 
@@ -151,5 +157,18 @@ public class Sistema {
 
     public void deletarAvaliacao(Avaliacao avEsc) {
         cAvaliacao.excluir(avEsc);
+    }
+
+    public ArrayList<Avaliacao> pegarAvaliacoesMusica(Musica M) {
+        ArrayList<Avaliacao> avaliacoesMu = new ArrayList<>();
+        ArrayList<Avaliacao> copiaA = pegarVetorAvaliacoes();
+
+        for (int i = 0; i < copiaA.size(); i++){
+            if (copiaA.get(i).getMusica().getId() == M.getId()){
+                avaliacoesMu.add(copiaA.get(i));
+            }
+        }
+
+        return avaliacoesMu;
     }
 }
