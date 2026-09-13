@@ -219,4 +219,8 @@ public class Sistema {
             cMusica.atualizarNota(musicaEsc);
         }
     }
+
+    public boolean adicionarPlaylist(Playlist P, int idU) {
+        return cPlaylist.add(P, idU);
+    }
 }
