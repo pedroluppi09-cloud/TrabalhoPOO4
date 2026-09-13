@@ -22,4 +22,8 @@ public class controleAvaliacao {
     public void excluir(Avaliacao avEsc) {
         rAvaliacao.delete(avEsc);
     }
+
+    public void colocaAvaliacaoComMusicaExcluida(int id) {
+        rAvaliacao.setExcluidoEmMusica(id);
+    }
 }

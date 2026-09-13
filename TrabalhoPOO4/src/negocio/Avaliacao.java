@@ -3,7 +3,7 @@ package negocio;
 public class Avaliacao {
     private int id;
     private String descricao;
-    private int nota;
+    private double nota;
     private Musica Musica;
     private Usuario Usuario;
 
@@ -17,7 +17,7 @@ public class Avaliacao {
         this.Musica = new Musica(a.Musica);
     }
 
-    public Avaliacao(int nota, String descricao, Musica m, Usuario u) {
+    public Avaliacao(double nota, String descricao, Musica m, Usuario u) {
         this.id = geraId++;
         this.nota = nota;
         this.descricao = descricao;
@@ -25,7 +25,7 @@ public class Avaliacao {
         this.Usuario = u;
     }
 
-    public static Avaliacao getInstance(int nota, String descricao, Musica musicaEsc, Usuario u) {
+    public static Avaliacao getInstance(double nota, String descricao, Musica musicaEsc, Usuario u) {
         if ((nota < 0 || nota > 10) || descricao.isEmpty() || musicaEsc == null || u == null){
             return null;
         } else {
@@ -45,7 +45,7 @@ public class Avaliacao {
         return id;
     }
 
-    public int getNota() {
+    public double getNota() {
         return nota;
     }
 
@@ -53,7 +53,7 @@ public class Avaliacao {
         return descricao;
     }
 
-    public void setNota(int nota) {
+    public void setNota(double nota) {
         this.nota = nota;
     }
 

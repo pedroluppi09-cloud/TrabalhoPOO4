@@ -30,7 +30,7 @@ public class controleMusica {
             System.out.println("Não é possível alterar a musica (Música já cadastrada)");
             return false;
         } else {
-            rMusica.edit(M, consi);
+            rMusica.edit(M);
             return true;
         }
     }
@@ -43,5 +43,9 @@ public class controleMusica {
         }
 
         return true;
+    }
+
+    public void atualizarNota(Musica musicaEsc) {
+        rMusica.edit(musicaEsc);
     }
 }

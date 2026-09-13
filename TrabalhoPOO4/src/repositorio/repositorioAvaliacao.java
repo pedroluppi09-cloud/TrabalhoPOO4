@@ -15,7 +15,9 @@ public class repositorioAvaliacao {
         ArrayList<Avaliacao> copia = new ArrayList<>();
 
         for (int i = 0; i < avaliacoes.size(); i++){
-            copia.add(new Avaliacao(avaliacoes.get(i)));
+            if (!avaliacoes.get(i).getMusica().isExcluido()) {
+                copia.add(new Avaliacao(avaliacoes.get(i)));
+            }
         }
 
         return copia;
@@ -39,6 +41,14 @@ public class repositorioAvaliacao {
             if (avaliacoes.get(i).getId() == avEsc.getId()){
                 avaliacoes.remove(i);
                 break;
+            }
+        }
+    }
+
+    public void setExcluidoEmMusica(int id) {
+        for (int i = 0; i < avaliacoes.size(); i++){
+            if (avaliacoes.get(i).getMusica().getId() == id){
+                avaliacoes.get(i).getMusica().setExcluido(true);
             }
         }
     }

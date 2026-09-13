@@ -310,7 +310,7 @@ public class UImusicas {
 
                         } while (!existe);
 
-                        excluiu = S.excluirMusica(MuEsc.getId());
+                        excluiu = S.excluirMusica(MuEsc);
 
                         if (!excluiu) {
                             System.out.println("Ocorreu algum erro na exclusão");

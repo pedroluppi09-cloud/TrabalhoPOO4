@@ -6,7 +6,7 @@ public class Musica {
     private int id;
     private String nome;
     private String artista;
-    private int notaAtual;
+    private double notaAtual;
     private Genero genero;
     private boolean excluido;
 
@@ -47,7 +47,7 @@ public class Musica {
         return artista;
     }
 
-    public int getNotaAtual() {
+    public double getNotaAtual() {
         return notaAtual;
     }
 
@@ -112,6 +112,10 @@ public class Musica {
     }
 
     public void imprimirColuna(String formato) {
-        System.out.printf(formato, id, nome, artista, notaAtual + "/10", genero);
+        System.out.printf(formato, id, nome, artista, String.format("%.2f", notaAtual) + "/10", genero);
+    }
+
+    public void setNotaAtual(double novaNota) {
+        notaAtual = novaNota;
     }
 }

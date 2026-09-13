@@ -6,10 +6,11 @@ import negocio.Sistema;
 import negocio.Usuario;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UIavaliacoes {
-    static Scanner scn = new Scanner(System.in);
+    Scanner scn = new Scanner(System.in).useLocale(Locale.US);
 
     public void menuInicial(Usuario U) {
         int opcao;
@@ -65,12 +66,12 @@ public class UIavaliacoes {
                             Avaliacao A = null;
 
                             do {
-                                int nota;
+                                double nota;
                                 String descricao;
 
                                 do {
                                     System.out.println("Nota (0 a 10)");
-                                    nota = scn.nextInt();
+                                    nota = scn.nextDouble();
                                     scn.nextLine();
                                 } while (nota < 0 || nota > 10);
 
@@ -115,11 +116,11 @@ public class UIavaliacoes {
 
                         } while (!existe);
 
-                        int nota;
+                        double nota;
                         String descricao;
 
                         do {
-                            System.out.println("Nota (0 a 10)");
+                            System.out.println("Nota (0 a 10) [" + String.format("%.2f", AvEsc.getNota()) + "]:");
                             nota = scn.nextInt();
                             scn.nextLine();
                         } while (nota < 0 || nota > 10);

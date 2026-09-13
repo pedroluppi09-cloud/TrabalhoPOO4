@@ -15,15 +15,21 @@ public class repositorioMusica {
         musicas.add(M);
     }
 
-    public void edit(Musica M, int i) {
-        musicas.set(i, M);
+    public void edit(Musica M) {
+        for (int i = 0; i < musicas.size(); i++) {
+            if (musicas.get(i).getId() == M.getId()){
+                musicas.set(i, M);
+            }
+        }
     }
 
     public ArrayList<Musica> getMusicas() {
         ArrayList<Musica> copia = new ArrayList<>();
 
         for (int i = 0; i < musicas.size(); i++){
-            copia.add(new Musica(musicas.get(i)));
+            if (!musicas.get(i).isExcluido()){
+                copia.add(new Musica(musicas.get(i)));
+            }
         }
 
         return copia;
@@ -67,5 +73,9 @@ public class repositorioMusica {
                 }
             }
         }
+    }
+
+    public void atualizarNota(int id) {
+
     }
 }
