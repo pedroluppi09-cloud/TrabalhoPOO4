@@ -6,9 +6,8 @@ public class Musica {
     private int id;
     private String nome;
     private String artista;
-    private int notaAtual;
+    private double notaAtual;
     private Genero genero;
-    private ArrayList<Avaliacao> Avaliacoes;
     private boolean excluido;
 
     private static int geraId = 1;
@@ -20,7 +19,6 @@ public class Musica {
         this.genero = genero;
 
         this.notaAtual = 0;
-        this.Avaliacoes = new ArrayList<>();
         this.excluido = false;
     }
 
@@ -31,16 +29,10 @@ public class Musica {
         this.notaAtual = m.notaAtual;
         this.genero = m.genero;
         this.excluido = m.excluido;
-
-        this.Avaliacoes = new ArrayList<>();
-
-        for (int i = 0; i < m.Avaliacoes.size(); i++){
-            this.Avaliacoes.add(new Avaliacao(m.Avaliacoes.get(i)));
-        }
     }
 
     public static Musica getInstance(String nome, String artista, Genero genero) {
-        if (nome.isEmpty() && artista.isEmpty() && genero == null){
+        if (nome.isEmpty() || artista.isEmpty() || genero == null){
             return null;
         } else {
             return new Musica(nome, artista, genero);
@@ -55,7 +47,7 @@ public class Musica {
         return artista;
     }
 
-    public int getNotaAtual() {
+    public double getNotaAtual() {
         return notaAtual;
     }
 
@@ -111,16 +103,6 @@ public class Musica {
         }
     }
 
-    public ArrayList<Avaliacao> getAvaliacoes() {
-        ArrayList<Avaliacao> copia = new ArrayList<>();
-
-        for (int i = 0; i < Avaliacoes.size(); i++){
-            this.Avaliacoes.add(new Avaliacao(Avaliacoes.get(i)));
-        }
-
-        return copia;
-    }
-
     public void setExcluido(boolean b) {
         this.excluido = b;
     }
@@ -130,6 +112,10 @@ public class Musica {
     }
 
     public void imprimirColuna(String formato) {
-        System.out.printf(formato, id, nome, artista, notaAtual + "/10", genero);
+        System.out.printf(formato, id, nome, artista, String.format("%.2f", notaAtual) + "/10", genero);
+    }
+
+    public void setNotaAtual(double novaNota) {
+        notaAtual = novaNota;
     }
 }

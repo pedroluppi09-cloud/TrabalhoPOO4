@@ -30,20 +30,22 @@ public class controleMusica {
             System.out.println("Não é possível alterar a musica (Música já cadastrada)");
             return false;
         } else {
-            rMusica.edit(M, consi);
+            rMusica.edit(M);
             return true;
         }
     }
 
-    public boolean excluir(int consi) {
-        Musica m = rMusica.pegarMusicaPelaPosicao(consi);
-
-        if (m.getAvaliacoes().isEmpty()){
-            rMusica.delete(consi, 'D'); //definitivo
-            return true;
+    public boolean excluir(int id, boolean temAvaliacao) {
+        if (!temAvaliacao){
+            rMusica.delete(id, 'D'); //delete padrao
         } else {
-            rMusica.delete(consi, 'S'); //softdelete
-            return true;
+            rMusica.delete(id, 'S'); //soft delete
         }
+
+        return true;
+    }
+
+    public void atualizarNota(Musica musicaEsc) {
+        rMusica.edit(musicaEsc);
     }
 }

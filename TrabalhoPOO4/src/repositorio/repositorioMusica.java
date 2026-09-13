@@ -15,15 +15,21 @@ public class repositorioMusica {
         musicas.add(M);
     }
 
-    public void edit(Musica M, int i) {
-        musicas.set(i, M);
+    public void edit(Musica M) {
+        for (int i = 0; i < musicas.size(); i++) {
+            if (musicas.get(i).getId() == M.getId()){
+                musicas.set(i, M);
+            }
+        }
     }
 
     public ArrayList<Musica> getMusicas() {
         ArrayList<Musica> copia = new ArrayList<>();
 
         for (int i = 0; i < musicas.size(); i++){
-            copia.add(new Musica(musicas.get(i)));
+            if (!musicas.get(i).isExcluido()){
+                copia.add(new Musica(musicas.get(i)));
+            }
         }
 
         return copia;
@@ -53,17 +59,23 @@ public class repositorioMusica {
         return NomeEArtistaRepete;
     }
 
-    public void delete(int i, char tipo) {
-        if (tipo == 'D'){
-            musicas.remove(i);
-        }
+    public void delete(int id, char tipo) {
+        for (int i = 0; i < musicas.size(); i++) {
+            if (musicas.get(i).getId() == id){
+                if (tipo == 'D'){
+                    musicas.remove(i);
+                    break;
+                }
 
-        if (tipo == 'S'){
-            musicas.get(i).setExcluido(true);
+                if (tipo == 'S'){
+                    musicas.get(i).setExcluido(true);
+                    break;
+                }
+            }
         }
     }
 
-    public Musica pegarMusicaPelaPosicao(int i){
-        return musicas.get(i);
+    public void atualizarNota(int id) {
+
     }
 }
