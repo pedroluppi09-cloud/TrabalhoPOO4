@@ -18,4 +18,8 @@ public class controleAvaliacao {
     public void editar(Avaliacao A) {
         rAvaliacao.edit(A);
     }
+
+    public void excluir(Avaliacao avEsc) {
+        rAvaliacao.delete(avEsc);
+    }
 }

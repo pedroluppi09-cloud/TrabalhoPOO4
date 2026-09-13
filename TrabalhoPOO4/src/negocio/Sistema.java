@@ -148,4 +148,8 @@ public class Sistema {
     public void alterarAvaliacao(Avaliacao avEsc) {
         cAvaliacao.editar(avEsc);
     }
+
+    public void deletarAvaliacao(Avaliacao avEsc) {
+        cAvaliacao.excluir(avEsc);
+    }
 }

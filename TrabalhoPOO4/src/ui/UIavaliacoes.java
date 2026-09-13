@@ -129,13 +129,52 @@ public class UIavaliacoes {
                         AvEsc.setDescricao(descricao);
 
                         S.alterarAvaliacao(AvEsc);
+                        System.out.println("Avaliação editada com sucesso");
                     }
                     break;
                 }
                 case 3: {
+                    ArrayList<Avaliacao> AvFeitasPorUsuario = S.pegarAvaliacoesUsuario(U);
+
+                    if (AvFeitasPorUsuario.isEmpty()){
+                        System.out.println("Nenhuma avaliação feita pelo usuário");
+                    } else {
+                        S.exibirAvaliacoes(AvFeitasPorUsuario);
+                        System.out.println("Insira o ID da avaliação que deseja editar");
+
+                        int idAvaliacao;
+                        Avaliacao AvEsc = null;
+                        boolean existe = false;
+
+                        do {
+                            idAvaliacao = scn.nextInt();
+
+                            for (int i = 0; i < AvFeitasPorUsuario.size(); i++) {
+                                if (idAvaliacao == AvFeitasPorUsuario.get(i).getId()) {
+                                    AvEsc = AvFeitasPorUsuario.get(i);
+                                    existe = true;
+                                    break;
+                                }
+                            }
+
+                            if (!existe)
+                                System.out.println("Insira um ID válido");
+
+                        } while (!existe);
+
+                        S.deletarAvaliacao(AvEsc);
+                        System.out.println("Avaliação excluida com sucesso");
+                    }
                     break;
                 }
                 case 4: {
+                    ArrayList<Avaliacao> AvFeitasPorUsuario = S.pegarAvaliacoesUsuario(U);
+
+                    if (AvFeitasPorUsuario.isEmpty()){
+                        System.out.println("Nenhuma avaliação feita pelo usuário");
+                    } else {
+                        S.exibirAvaliacoes(AvFeitasPorUsuario);
+                    }
                     break;
                 }
                 case 5: {

@@ -33,4 +33,13 @@ public class repositorioAvaliacao {
             }
         }
     }
+
+    public void delete(Avaliacao avEsc) {
+        for (int i = 0; i < avaliacoes.size(); i++){
+            if (avaliacoes.get(i).getId() == avEsc.getId()){
+                avaliacoes.remove(i);
+                break;
+            }
+        }
+    }
 }
