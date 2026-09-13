@@ -28,4 +28,8 @@ public class controlePlaylist {
     public void remMusica(Playlist p, int idMusica) {
         rPlaylist.remMusica(p, idMusica);
     }
+
+    public void CompartilharComUsuario(Playlist p, Usuario u) {
+        rPlaylist.compartilharComUsuario(p, u);
+    }
 }

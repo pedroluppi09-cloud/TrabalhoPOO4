@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class UIplaylists {
     static Scanner scn = new Scanner(System.in);
 
-    public void menuInicial(Usuario U, ArrayList<Usuario> usuarios) {
+    public void menuInicial(Usuario U, ArrayList<Usuario> TodosUs) {
         int opcao;
         Sistema S = Sistema.getInstance();
         UiPlaylistMusica uiPM = new UiPlaylistMusica();
@@ -24,7 +24,8 @@ public class UIplaylists {
             System.out.println("4 - Inserir / Remover Música em playlist");
             System.out.println("5 - Listar suas playlists");
             System.out.println("6 - Listar playlists compartilhadas com você");
-            System.out.println("7 - Compartilhar playlist com usuário");
+            System.out.println("7 - Listar músicas de uma Playlist");
+            System.out.println("8 - Compartilhar playlist com usuário");
             opcao = scn.nextInt();
             scn.nextLine();
 
@@ -107,9 +108,112 @@ public class UIplaylists {
                     break;
                 }
                 case 6: {
+                    ArrayList<Playlist> PlaylistsCompartilhadas = S.pegarPlaylistsCompartilhadas(U);
+
+                    if (PlaylistsCompartilhadas.isEmpty()){
+                        System.out.println("Nenhuma playlist compartilhada com você no momento");
+                    } else {
+                        S.exibirPlaylists(PlaylistsCompartilhadas);
+                    }
                     break;
                 }
                 case 7: {
+                    ArrayList<Playlist> Playlists = S.pegarPlaylistsDeUsuarioECompartilhadas(U);
+
+                    if (Playlists.isEmpty()){
+                        System.out.println("Nenhuma playlist foi encontrada");
+                    } else {
+                        S.exibirPlaylists(Playlists);
+                        System.out.println("Escolha o ID da playlist que deseja exibir as músicas");
+
+                        boolean existe = false;
+                        ArrayList<Musica> musPlaylist = null;
+
+                        do {
+                            int idPlaylist = scn.nextInt();
+
+                            for (int i = 0; i < Playlists.size(); i++) {
+                                if (Playlists.get(i).getId() == idPlaylist) {
+                                    musPlaylist = Playlists.get(i).getMusicas();
+                                    existe = true;
+                                    break;
+                                }
+                            }
+
+                            if (!existe)
+                                System.out.println("Insira um ID válido");
+
+                        } while (!existe);
+
+                        if (musPlaylist.isEmpty()){
+                            System.out.println("Nenhuma música inserida na Playlist");
+                        } else {
+                            S.exibirMusicas(musPlaylist);
+                        }
+                    }
+                    break;
+                }
+                case 8: {
+                    ArrayList<Playlist> PlaylistsdoUsuario = S.pegarPlaylistsDeUsuario(U);
+
+                    if (PlaylistsdoUsuario.isEmpty()){
+                        System.out.println("Nenhuma playlist cadastrada");
+                    } else {
+                        S.exibirPlaylists(PlaylistsdoUsuario);
+                        System.out.println("Selecione o ID da playlist que deseja adicionar / remover música");
+
+                        boolean existe = false;
+                        Playlist playEsc = null;
+
+                        do {
+                            int idPlaylist = scn.nextInt();
+
+                            for (int i = 0; i < PlaylistsdoUsuario.size(); i++) {
+                                if (PlaylistsdoUsuario.get(i).getId() == idPlaylist) {
+                                    playEsc = PlaylistsdoUsuario.get(i);
+                                    existe = true;
+                                    break;
+                                }
+                            }
+
+                            if (!existe)
+                                System.out.println("Insira um ID válido");
+
+                        } while (!existe);
+
+                        ArrayList<Usuario> usNaoCompartilhados = S.pegarUsuariosNaoCompartilhados(playEsc, TodosUs);
+
+                        if (usNaoCompartilhados.isEmpty()){
+                            System.out.println("Voce já compartilhou esta playlist com todos os usuários da plataforma");
+                        } else {
+                            S.exibirUsuarios(usNaoCompartilhados);
+                            System.out.println("Insira o ID do usuário com quem você vai compartilahr a playlist");
+
+                            boolean existeU = false;
+                            Usuario Ucomp = null;
+
+                            do {
+                                int id = scn.nextInt();
+
+                                for(int i = 0; i < TodosUs.size(); i++){
+                                    if (TodosUs.get(i).getId() == id && id != U.getId()){
+                                        Ucomp = TodosUs.get(i);
+                                        existeU = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!existeU)
+                                    System.out.println("Usuário não encontrado");
+                            } while (!existeU);
+
+                            S.CompartilharPlaylistComUsuario(playEsc, Ucomp);
+                            System.out.println("Compartilhamento feito com sucesso");
+                        }
+                    }
+
+                    S.exibirUsuarios(TodosUs);
+
                     break;
                 }
                 default: {
@@ -117,7 +221,5 @@ public class UIplaylists {
                 }
             }
         } while (opcao != 0);
-
-
     }
 }

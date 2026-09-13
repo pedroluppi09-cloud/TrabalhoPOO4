@@ -2,6 +2,7 @@ package repositorio;
 
 import negocio.Musica;
 import negocio.Playlist;
+import negocio.Usuario;
 
 import java.util.ArrayList;
 
@@ -54,6 +55,15 @@ public class repositorioPlaylist {
                         break;
                     }
                 }
+            }
+        }
+    }
+
+    public void compartilharComUsuario(Playlist p, Usuario u) {
+        for (int i = 0; i < playlists.size(); i++){
+            if (playlists.get(i).getId() == p.getId()){
+                playlists.get(i).getUsuariosCompartilhados().add(u);
+                break;
             }
         }
     }

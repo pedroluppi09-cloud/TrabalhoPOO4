@@ -280,4 +280,71 @@ public class Sistema {
     public void remMusicaEmPlaylist(Playlist p, int idMusica) {
         cPlaylist.remMusica(p, idMusica);
     }
+
+    public ArrayList<Playlist> pegarPlaylistsDeUsuarioECompartilhadas(Usuario U) {
+        ArrayList<Playlist> playlist = new ArrayList<>();
+
+        ArrayList<Playlist> doUsuario = pegarPlaylistsDeUsuario(U);
+        ArrayList<Playlist> compartilhadas = pegarPlaylistsCompartilhadas(U);
+
+        playlist.addAll(doUsuario);
+        playlist.addAll(compartilhadas);
+
+        return playlist;
+    }
+
+    public ArrayList<Playlist> pegarPlaylistsCompartilhadas(Usuario U) {
+        ArrayList<Playlist> copiaP = pegarVetorPlaylists();
+        ArrayList<Playlist> compartilhadas = new ArrayList<>();
+
+        for (int i = 0; i < copiaP.size(); i++){
+            for (int j = 0; j < copiaP.get(i).getUsuariosCompartilhados().size(); j++){
+                if (U.getId() == copiaP.get(i).getUsuariosCompartilhados().get(j).getId()){
+                    compartilhadas.add(copiaP.get(i));
+                    break;
+                }
+            }
+        }
+
+        return compartilhadas;
+    }
+
+    public void exibirUsuarios(ArrayList<Usuario> U) {
+        String formato = "%-4s %-10s %-1s";
+        System.out.printf(formato, "ID", "NOME", "FUNÇÃO");
+        System.out.println();
+
+        for(int i = 0; i < U.size(); i++){
+            if (U.get(i).getFuncao() == 'O'){
+                System.out.printf(formato, U.get(i).getId(), U.get(i).getNome(), "Ouvinte");
+            } else {
+                System.out.printf(formato, U.get(i).getId(), U.get(i).getNome(), "Administrador");
+            }
+            System.out.println();
+        }
+    }
+
+    public ArrayList<Usuario> pegarUsuariosNaoCompartilhados(Playlist P, ArrayList<Usuario> todosUs) {
+        ArrayList<Usuario> usNaoCompartilhados = new ArrayList<>();
+
+        for (int i = 0; i < todosUs.size(); i++){
+            boolean compartilhado = false;
+            for (int j = 0; j < P.getUsuariosCompartilhados().size(); j++){
+                if (todosUs.get(i).getId() == P.getUsuariosCompartilhados().get(j).getId()){
+                    compartilhado = true;
+                    break;
+                }
+            }
+
+            if (!compartilhado){
+                usNaoCompartilhados.add(todosUs.get(i));
+            }
+        }
+
+        return usNaoCompartilhados;
+    }
+
+    public void CompartilharPlaylistComUsuario(Playlist P, Usuario U) {
+        cPlaylist.CompartilharComUsuario(P, U);
+    }
 }
