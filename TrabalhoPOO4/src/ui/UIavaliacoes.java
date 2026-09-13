@@ -27,7 +27,6 @@ public class UIavaliacoes {
 
             ArrayList<Musica> copiaM = S.pegarVetorMusicas();
             switch (opcao){
-
                 case 1: { // FAZER AVALIAÇÃO DE MÚSICA
                     if (copiaM.isEmpty()){
                         System.out.println("Nenhuma música cadastrada");
@@ -70,6 +69,7 @@ public class UIavaliacoes {
                                 do {
                                     System.out.println("Nota (0 a 10)");
                                     nota = scn.nextInt();
+                                    scn.nextLine();
                                 } while (nota < 0 || nota > 10);
 
                                 System.out.println("Descricao:");
@@ -85,6 +85,51 @@ public class UIavaliacoes {
                     break;
                 }
                 case 2:{
+                    ArrayList<Avaliacao> AvFeitasPorUsuario = S.pegarAvaliacoesUsuario(U);
+
+                    if (AvFeitasPorUsuario.isEmpty()){
+                        System.out.println("Nenhuma avaliação feita pelo usuário");
+                    } else {
+                        S.exibirAvaliacoes(AvFeitasPorUsuario);
+                        System.out.println("Insira o ID da avaliação que deseja editar");
+
+                        int idAvaliacao;
+                        Avaliacao AvEsc = null;
+                        boolean existe = false;
+
+                        do {
+                            idAvaliacao = scn.nextInt();
+
+                            for (int i = 0; i < AvFeitasPorUsuario.size(); i++) {
+                                if (idAvaliacao == AvFeitasPorUsuario.get(i).getId()) {
+                                    AvEsc = AvFeitasPorUsuario.get(i);
+                                    existe = true;
+                                    break;
+                                }
+                            }
+
+                            if (!existe)
+                                System.out.println("Insira um ID válido");
+
+                        } while (!existe);
+
+                        int nota;
+                        String descricao;
+
+                        do {
+                            System.out.println("Nota (0 a 10)");
+                            nota = scn.nextInt();
+                            scn.nextLine();
+                        } while (nota < 0 || nota > 10);
+
+                        System.out.println("Descricao:");
+                        descricao = scn.nextLine();
+
+                        AvEsc.setNota(nota);
+                        AvEsc.setDescricao(descricao);
+
+                        S.alterarAvaliacao(AvEsc);
+                    }
                     break;
                 }
                 case 3: {

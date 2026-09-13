@@ -35,16 +35,7 @@ public class controleMusica {
         }
     }
 
-    public boolean excluir(int id, ArrayList<Avaliacao> Av) {
-        boolean temAvaliacao = false;
-
-        for (int i = 0; i < Av.size(); i++){
-            if (Av.get(i).getMusica().getId() == id){
-                temAvaliacao = true;
-                break;
-            }
-        }
-
+    public boolean excluir(int id, boolean temAvaliacao) {
         if (!temAvaliacao){
             rMusica.delete(id, 'D'); //delete padrao
         } else {

@@ -1,7 +1,5 @@
 package negocio;
 
-import java.util.ArrayList;
-
 public class Avaliacao {
     private int id;
     private String descricao;
@@ -41,5 +39,25 @@ public class Avaliacao {
 
     public Usuario getUsuario() {
         return new Usuario(Usuario);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getNota() {
+        return nota;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setNota(int nota) {
+        this.nota = nota;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

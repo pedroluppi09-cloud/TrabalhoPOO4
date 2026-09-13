@@ -14,4 +14,8 @@ public class controleAvaliacao {
     public void add(Avaliacao A) {
         rAvaliacao.add(A);
     }
+
+    public void editar(Avaliacao A) {
+        rAvaliacao.edit(A);
+    }
 }

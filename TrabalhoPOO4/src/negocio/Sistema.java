@@ -30,7 +30,7 @@ public class Sistema {
         return cMusica.pegarVetor();
     }
 
-    public void sortearMusicaOrdemCcodigoCrescente(ArrayList<Musica> copia) {
+    public void sortearMusicaNotaCrescente(ArrayList<Musica> copia) {
         Musica aux;
 
         for (int i = 0; i < copia.size() - 1; i++) {
@@ -44,7 +44,7 @@ public class Sistema {
         }
     }
 
-    public void sortearMusicaOrdemCcodigoDecrescente(ArrayList<Musica> copia) {
+    public void sortearMusicaNotaDecrescente(ArrayList<Musica> copia) {
         Musica aux;
 
         for (int i = 0; i < copia.size() - 1; i++) {
@@ -63,8 +63,20 @@ public class Sistema {
     }
 
     public boolean excluirMusica(int id) {
+        boolean temAvalicao = verMusicaTemAvaliacao(id);
+        return cMusica.excluir(id, temAvalicao);
+    }
+
+    private boolean verMusicaTemAvaliacao(int id) {
         ArrayList<Avaliacao> copiaA = pegarVetorAvaliacoes();
-        return cMusica.excluir(id, copiaA);
+
+        for (int i = 0; i < copiaA.size(); i++){
+            if (copiaA.get(i).getMusica().getId() == id){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public ArrayList<Avaliacao> pegarVetorAvaliacoes() {
@@ -79,8 +91,8 @@ public class Sistema {
             boolean avaliadaPeloUsuario = false;
 
             for (int j = 0; j < copiaA.size(); j++) {
-                if (copiaA.get(i).getMusica().getId() == copiaM.get(i).getId() &&
-                        copiaA.get(i).getUsuario().getId() == U.getId()) {
+                if (copiaA.get(j).getMusica().getId() == copiaM.get(i).getId() &&
+                        copiaA.get(j).getUsuario().getId() == U.getId()) {
                     avaliadaPeloUsuario = true;
                     break;
                 }
@@ -108,5 +120,32 @@ public class Sistema {
 
     public void adicionarAvaliacao(Avaliacao A) {
         cAvaliacao.add(A);
+    }
+
+    public ArrayList<Avaliacao> pegarAvaliacoesUsuario(Usuario U) {
+        ArrayList<Avaliacao> avaliacoesUs = new ArrayList<>();
+        ArrayList<Avaliacao> copiaA = pegarVetorAvaliacoes();
+
+        for (int i = 0; i < copiaA.size(); i++){
+            if (copiaA.get(i).getUsuario().getId() == U.getId()){
+                avaliacoesUs.add(copiaA.get(i));
+            }
+        }
+
+        return avaliacoesUs;
+    }
+
+    public void exibirAvaliacoes(ArrayList<Avaliacao> avFeitasPorUsuario) {
+        for (int i = 0; i < avFeitasPorUsuario.size(); i++){
+            System.out.println("ID " + avFeitasPorUsuario.get(i).getId() + " | " + avFeitasPorUsuario.get(i).getUsuario().getNome());
+            System.out.println("NOTA: " + avFeitasPorUsuario.get(i).getNota() + "/10");
+            System.out.println("DESCRICAO: " + avFeitasPorUsuario.get(i).getDescricao());
+
+            System.out.println();
+        }
+    }
+
+    public void alterarAvaliacao(Avaliacao avEsc) {
+        cAvaliacao.editar(avEsc);
     }
 }

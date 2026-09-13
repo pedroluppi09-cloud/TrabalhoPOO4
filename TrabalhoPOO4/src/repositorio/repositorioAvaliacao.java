@@ -24,4 +24,13 @@ public class repositorioAvaliacao {
     public void add(Avaliacao A) {
         avaliacoes.add(A);
     }
+
+    public void edit(Avaliacao a) {
+        for (int i = 0; i < avaliacoes.size(); i++){
+            if (avaliacoes.get(i).getId() == a.getId()) {
+                avaliacoes.set(i, a);
+                break;
+            }
+        }
+    }
 }

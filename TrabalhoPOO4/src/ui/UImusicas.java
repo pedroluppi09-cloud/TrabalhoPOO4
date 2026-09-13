@@ -144,9 +144,9 @@ public class UImusicas {
                         } while (nota < 0 || nota > 10);
 
                         if (opcaoMaiorMenor == 1){
-                            S.sortearMusicaOrdemCcodigoCrescente(copia);
+                            S.sortearMusicaNotaCrescente(copia);
                         } else {
-                            S.sortearMusicaOrdemCcodigoDecrescente(copia);
+                            S.sortearMusicaNotaDecrescente(copia);
                         }
 
                         ArrayList<Musica> musicasNota = new ArrayList<>();
@@ -209,13 +209,10 @@ public class UImusicas {
                             } else {
                                 adicionou = S.adicionarMusica(M);
 
-                                if (!adicionou) {
-                                    System.out.println("Não foi possível adicionar a música. Ela possui nome e artista repetidos");
-                                } else {
+                                if (adicionou) {
                                     System.out.println("Musica cadastrada com sucesso");
                                 }
                             }
-
                         } while (!adicionou);
                     }
                     break;
@@ -279,8 +276,8 @@ public class UImusicas {
 
                                 alterou = S.alterarMusica(musicaEsc, consi);
 
-                                if (!alterou)
-                                    System.out.println("Não foi possível editar a música. Ela possui nome e artista repetidos");
+                                if (alterou)
+                                    System.out.println("Musica alterada com sucesso");
                             }
 
                         } while (!alterou);
@@ -289,10 +286,10 @@ public class UImusicas {
                 }
                 case 7: { // EXCLUIR MÚSICAS
                     if (tipo == 'A') {
-                        boolean excluiu = false;
+                        boolean excluiu;
+                        Musica MuEsc = null;
                         boolean existe = false;
                         int idMusica;
-                        Musica musicaEsc = null;
 
                         S.exibirMusicas(copia);
                         System.out.println("Insira o ID da música que deseja alterar");
@@ -302,7 +299,8 @@ public class UImusicas {
 
                             for (int i = 0; i < copia.size(); i++) {
                                 if (idMusica == copia.get(i).getId()) {
-                                    musicaEsc = copia.get(i);
+                                    MuEsc = copia.get(i);
+                                    existe = true;
                                     break;
                                 }
                             }
@@ -312,7 +310,7 @@ public class UImusicas {
 
                         } while (!existe);
 
-                        excluiu = S.excluirMusica(musicaEsc.getId());
+                        excluiu = S.excluirMusica(MuEsc.getId());
 
                         if (!excluiu) {
                             System.out.println("Ocorreu algum erro na exclusão");

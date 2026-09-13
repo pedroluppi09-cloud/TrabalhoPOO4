@@ -32,7 +32,7 @@ public class Musica {
     }
 
     public static Musica getInstance(String nome, String artista, Genero genero) {
-        if (nome.isEmpty() && artista.isEmpty() && genero == null){
+        if (nome.isEmpty() || artista.isEmpty() || genero == null){
             return null;
         } else {
             return new Musica(nome, artista, genero);
