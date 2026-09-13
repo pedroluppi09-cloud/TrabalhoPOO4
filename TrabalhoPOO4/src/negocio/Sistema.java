@@ -223,4 +223,61 @@ public class Sistema {
     public boolean adicionarPlaylist(Playlist P, int idU) {
         return cPlaylist.add(P, idU);
     }
+
+    public ArrayList<Playlist> pegarPlaylistsDeUsuario(Usuario U) {
+        ArrayList<Playlist> copiaP = pegarVetorPlaylists();
+        ArrayList<Playlist> doUsuario = new ArrayList<>();
+
+        for (int i = 0; i < copiaP.size(); i++){
+            if (U.getId() == copiaP.get(i).getUsuarioCriou().getId()){
+                doUsuario.add(copiaP.get(i));
+            }
+        }
+
+        return doUsuario;
+    }
+
+    private ArrayList<Playlist> pegarVetorPlaylists() {
+        return cPlaylist.pegarVetor();
+    }
+
+    public void exibirPlaylists(ArrayList<Playlist> playlists) {
+        for (int i = 0; i < playlists.size(); i++){
+            System.out.println("ID " + playlists.get(i).getId() + " | " + playlists.get(i).getUsuarioCriou().getNome());
+            System.out.println("NOME: " + playlists.get(i).getNome());
+            System.out.println("DESCRICAO: " + playlists.get(i).getDescricao());
+            System.out.println("QUANTIDADE DE MÚSICAS: " + playlists.get(i).getMusicas().size());
+            System.out.println();
+        }
+    }
+
+    public ArrayList<Musica> pegarMusicasNaoAdicionadas(Playlist P) {
+        ArrayList<Musica> copia = pegarVetorMusicas();
+        ArrayList<Musica> naoAdd = new ArrayList<>();
+
+        for (int i = 0; i < copia.size(); i++){
+            boolean adicionada = false;
+
+            for (int j = 0; j < P.getMusicas().size(); j++){
+                if (copia.get(i).getId() == P.getMusicas().get(j).getId()){
+                    adicionada = true;
+                    break;
+                }
+            }
+
+            if (!adicionada){
+                naoAdd.add(copia.get(i));
+            }
+        }
+
+        return naoAdd;
+    }
+
+    public void addMusicaEmPlaylist(Playlist p, Musica musicaEsc) {
+        cPlaylist.addMusica(p, musicaEsc);
+    }
+
+    public void remMusicaEmPlaylist(Playlist p, int idMusica) {
+        cPlaylist.remMusica(p, idMusica);
+    }
 }
