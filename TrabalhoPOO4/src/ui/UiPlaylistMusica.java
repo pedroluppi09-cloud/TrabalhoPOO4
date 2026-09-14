@@ -15,10 +15,13 @@ public class UiPlaylistMusica {
         int opcao;
 
         do {
+            System.out.println("--------------------------------------------");
             System.out.println("0 - SAIR");
             System.out.println("1 - Adicionar Música");
             System.out.println("2 - Remover Música");
             opcao = scn.nextInt();
+
+            System.out.println("--------------------------------------------");
 
             switch (opcao){
                 case 1:{

@@ -47,4 +47,8 @@ public class controlePlaylist {
         rPlaylist.excluir(P);
         return true;
     }
+
+    public void atualizarMusica(Musica M) {
+        rPlaylist.atualizarMusica(M);
+    }
 }

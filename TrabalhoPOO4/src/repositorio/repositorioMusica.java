@@ -74,8 +74,4 @@ public class repositorioMusica {
             }
         }
     }
-
-    public void atualizarNota(int id) {
-
-    }
 }

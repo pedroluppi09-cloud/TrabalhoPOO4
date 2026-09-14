@@ -18,6 +18,7 @@ public class UIavaliacoes {
         String formatoM = "%-4s %-25s %-25s %-15s %-1s";
 
         do {
+            System.out.println("--------------------------------------------");
             System.out.println("0 - SAIR");
             System.out.println("1 - Fazer a avaliação de uma música");
             System.out.println("2 - Editar a avaliação de uma música");
@@ -26,6 +27,7 @@ public class UIavaliacoes {
             System.out.println("5 - Listar avaliações de uma música");
             opcao = scn.nextInt();
 
+            System.out.println("--------------------------------------------");
 
             switch (opcao){
                 case 1: { // FAZER AVALIAÇÃO DE MÚSICA

@@ -94,4 +94,15 @@ public class repositorioPlaylist {
             }
         }
     }
+
+    public void atualizarMusica(Musica M) {
+        for (int i = 0; i < playlists.size(); i++){
+            for (int j = 0; j < playlists.get(i).getMusicas().size(); j++){
+                if (playlists.get(i).getMusicas().get(j).getId() == M.getId()){
+                    playlists.get(i).getMusicas().set(j, new Musica(M));
+                    break;
+                }
+            }
+        }
+    }
 }

@@ -67,7 +67,7 @@ public class Playlist {
     }
 
     public Usuario getUsuarioCriou() {
-        return UsuarioCriou;
+        return new Usuario(UsuarioCriou);
     }
 
     public ArrayList<Usuario> getUsuariosCompartilhados() {

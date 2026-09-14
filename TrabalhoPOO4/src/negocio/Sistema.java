@@ -22,6 +22,7 @@ public class Sistema {
         return instance;
     }
 
+    // MÉTODOS DE MÚSICA ----------------------------------------------------------------------------------
     public boolean adicionarMusica(Musica M) {
         return cMusica.add(M);
     }
@@ -58,8 +59,14 @@ public class Sistema {
         }
     }
 
-    public boolean alterarMusica(Musica musicaEsc, int consi) {
-        return cMusica.alterar(musicaEsc, consi);
+    public boolean alterarMusica(Musica musicaEsc) {
+        boolean alterou = cMusica.alterar(musicaEsc);
+
+        if (alterou) {
+            cPlaylist.atualizarMusica(musicaEsc);
+        }
+
+        return alterou;
     }
 
     public boolean excluirMusica(Musica M) {
@@ -67,10 +74,22 @@ public class Sistema {
 
         if (temAvalicao) {
             ArrayList<Avaliacao> copiaA = pegarVetorAvaliacoes();
+            ArrayList<Playlist> copiaP = pegarVetorPlaylists();
 
             for (int i = 0; i < copiaA.size(); i++) {
                 if (copiaA.get(i).getMusica().getId() == M.getId()) {
                     colocaAvaliacaoComMusicaExcluida(copiaA.get(i).getId());
+                }
+            }
+        }
+
+        ArrayList<Playlist> copiaP = pegarVetorPlaylists();
+
+        for (int i = 0; i < copiaP.size(); i++) {
+            for (int j = 0; j < copiaP.get(i).getMusicas().size(); j++){
+                if (M.getId() == copiaP.get(i).getMusicas().get(j).getId()){
+                    remMusicaEmPlaylist(copiaP.get(i), M.getId());
+                    break;
                 }
             }
         }
@@ -217,6 +236,7 @@ public class Sistema {
         if (musicaEsc != null) {
             musicaEsc.setNotaAtual(novaNota);
             cMusica.atualizarNota(musicaEsc);
+            cPlaylist.atualizarMusica(musicaEsc);
         }
     }
 

@@ -14,6 +14,7 @@ public class UIplaylists {
         UiPlaylistMusica uiPM = new UiPlaylistMusica();
 
         do {
+            System.out.println("--------------------------------------------");
             System.out.println("0 - SAIR");
             System.out.println("1 - Criar uma playlist");
             System.out.println("2 - Editar informações de playlist");
@@ -25,6 +26,8 @@ public class UIplaylists {
             System.out.println("8 - Compartilhar playlist com usuário");
             opcao = scn.nextInt();
             scn.nextLine();
+
+            System.out.println("--------------------------------------------");
 
             switch (opcao){
                 case 1: {
@@ -241,7 +244,7 @@ public class UIplaylists {
                         System.out.println("Nenhuma playlist cadastrada");
                     } else {
                         S.exibirPlaylists(PlaylistsdoUsuario);
-                        System.out.println("Selecione o ID da playlist que deseja adicionar / remover música");
+                        System.out.println("Selecione o ID da playlist que deseja compartilhar com alguém");
 
                         boolean existe = false;
                         Playlist playEsc = null;

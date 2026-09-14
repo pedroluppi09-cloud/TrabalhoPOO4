@@ -60,4 +60,8 @@ public class Avaliacao {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public void setMusicaExcluida() {
+        this.Musica.setExcluido(true);
+    }
 }
