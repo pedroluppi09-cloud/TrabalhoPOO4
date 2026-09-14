@@ -4,10 +4,10 @@ import negocio.Musica;
 
 import java.util.ArrayList;
 
-public class repositorioMusica {
+public class RepositorioMusica {
     private ArrayList<Musica> musicas;
 
-    public repositorioMusica() {
+    public RepositorioMusica() {
         musicas = new ArrayList<>();
     }
 

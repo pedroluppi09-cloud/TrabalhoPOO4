@@ -1,14 +1,14 @@
 package negocio;
 
-import repositorio.repositorioMusica;
+import repositorio.RepositorioMusica;
 
 import java.util.ArrayList;
 
 public class ControleMusica {
-    private repositorioMusica rMusica;
+    private RepositorioMusica rMusica;
 
     public ControleMusica() {
-        rMusica = new repositorioMusica();
+        rMusica = new RepositorioMusica();
     }
 
     public boolean add(Musica M){

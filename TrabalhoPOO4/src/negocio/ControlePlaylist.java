@@ -1,11 +1,11 @@
 package negocio;
 
-import repositorio.repositorioPlaylist;
+import repositorio.RepositorioPlaylist;
 
 import java.util.ArrayList;
 
 public class ControlePlaylist {
-    private repositorioPlaylist rPlaylist = new repositorioPlaylist();
+    private RepositorioPlaylist rPlaylist = new RepositorioPlaylist();
 
     public boolean add(Playlist P, int idU) {
         if (rPlaylist.encontrarPlaylistNomeIgual(P, idU, 'C')){

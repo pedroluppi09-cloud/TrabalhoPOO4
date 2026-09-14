@@ -6,7 +6,7 @@ import negocio.Usuario;
 
 import java.util.ArrayList;
 
-public class repositorioPlaylist {
+public class RepositorioPlaylist {
     ArrayList<Playlist> playlists = new ArrayList<>();
 
     public boolean encontrarPlaylistNomeIgual(Playlist P, int idU, char funcao) {

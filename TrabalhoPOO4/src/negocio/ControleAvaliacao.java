@@ -1,11 +1,11 @@
 package negocio;
 
-import repositorio.repositorioAvaliacao;
+import repositorio.RepositorioAvaliacao;
 
 import java.util.ArrayList;
 
 public class ControleAvaliacao {
-    repositorioAvaliacao rAvaliacao = new repositorioAvaliacao();
+    RepositorioAvaliacao rAvaliacao = new RepositorioAvaliacao();
 
     public ArrayList<Avaliacao> pegarVetor() {
         return rAvaliacao.getAvaliacoes();

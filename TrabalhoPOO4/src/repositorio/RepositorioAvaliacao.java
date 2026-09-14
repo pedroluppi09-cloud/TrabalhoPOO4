@@ -4,10 +4,10 @@ import negocio.Avaliacao;
 
 import java.util.ArrayList;
 
-public class repositorioAvaliacao {
+public class RepositorioAvaliacao {
     ArrayList<Avaliacao> avaliacoes;
 
-    public repositorioAvaliacao() {
+    public RepositorioAvaliacao() {
         avaliacoes = new ArrayList<>();
     }
 
