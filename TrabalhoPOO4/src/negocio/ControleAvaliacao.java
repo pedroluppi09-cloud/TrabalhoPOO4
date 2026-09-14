@@ -4,7 +4,7 @@ import repositorio.repositorioAvaliacao;
 
 import java.util.ArrayList;
 
-public class controleAvaliacao {
+public class ControleAvaliacao {
     repositorioAvaliacao rAvaliacao = new repositorioAvaliacao();
 
     public ArrayList<Avaliacao> pegarVetor() {

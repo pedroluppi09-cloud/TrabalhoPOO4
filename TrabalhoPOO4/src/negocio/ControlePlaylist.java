@@ -4,7 +4,7 @@ import repositorio.repositorioPlaylist;
 
 import java.util.ArrayList;
 
-public class controlePlaylist {
+public class ControlePlaylist {
     private repositorioPlaylist rPlaylist = new repositorioPlaylist();
 
     public boolean add(Playlist P, int idU) {

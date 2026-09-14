@@ -122,7 +122,7 @@ public class UIavaliacoes {
                         String descricao;
 
                         do {
-                            System.out.println("Nota (0 a 10) [" + String.format("%.2f", AvEsc.getNota()) + "]:");
+                            System.out.println("Nota (0 a 10) [" + String.format("%", AvEsc.getNota()) + "]:");
                             nota = scn.nextInt();
                             scn.nextLine();
                         } while (nota < 0 || nota > 10);

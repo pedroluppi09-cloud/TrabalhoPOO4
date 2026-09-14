@@ -4,10 +4,10 @@ import repositorio.repositorioMusica;
 
 import java.util.ArrayList;
 
-public class controleMusica {
+public class ControleMusica {
     private repositorioMusica rMusica;
 
-    public controleMusica() {
+    public ControleMusica() {
         rMusica = new repositorioMusica();
     }
 

@@ -3,16 +3,16 @@ package negocio;
 import java.util.ArrayList;
 
 public class Sistema {
-    private controlePlaylist cPlaylist;
-    private controleMusica cMusica;
-    private controleAvaliacao cAvaliacao;
+    private ControlePlaylist cPlaylist;
+    private ControleMusica cMusica;
+    private ControleAvaliacao cAvaliacao;
 
     private static Sistema instance;
 
     private Sistema() {
-        cPlaylist = new controlePlaylist();
-        cMusica = new controleMusica();
-        cAvaliacao = new controleAvaliacao();
+        cPlaylist = new ControlePlaylist();
+        cMusica = new ControleMusica();
+        cAvaliacao = new ControleAvaliacao();
     }
 
     public static Sistema getInstance() {
