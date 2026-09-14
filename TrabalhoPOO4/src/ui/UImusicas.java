@@ -5,10 +5,11 @@ import negocio.Musica;
 import negocio.Sistema;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UImusicas {
-    Scanner scn = new Scanner(System.in);
+    Scanner scn = new Scanner(System.in).useLocale(Locale.US);
 
     public void menuInicial(char tipo) {
         int opcao = 0;
@@ -75,7 +76,7 @@ public class UImusicas {
                             }
                         } while (!generoValido);
 
-                        if (copia.isEmpty()){
+                        if (musicasGenero.isEmpty()){
                             System.out.println("Nenhuma musica do genero inserido existe");
                         } else {
                             S.exibirMusicas(musicasGenero);
@@ -126,7 +127,7 @@ public class UImusicas {
                 }
                 case 4: { // LISTAR TODAS AS MÚSICAS PELA NOTA
                     int opcaoMaiorMenor = 0;
-                    int nota;
+                    double nota;
 
                     if (copia.isEmpty()) {
                         System.out.println("Nenhuma música cadastrada");
@@ -140,7 +141,7 @@ public class UImusicas {
 
                         do {
                             System.out.println("Escolha a nota (entre 0 e 10):");
-                            nota = scn.nextInt();
+                            nota = scn.nextDouble();
                         } while (nota < 0 || nota > 10);
 
                         if (opcaoMaiorMenor == 1){
@@ -221,7 +222,6 @@ public class UImusicas {
                     if (tipo == 'A'){
                         boolean existe = false;
                         int idMusica;
-                        int consi = 0;
                         Musica musicaEsc = null;
 
                         S.exibirMusicas(copia);
@@ -233,7 +233,6 @@ public class UImusicas {
                             for (int i = 0; i < copia.size(); i++){
                                 if (idMusica == copia.get(i).getId()){
                                     musicaEsc = copia.get(i);
-                                    consi = i;
                                     existe = true;
                                     break;
                                 }
@@ -274,7 +273,7 @@ public class UImusicas {
                                 musicaEsc.setArtista(artista);
                                 musicaEsc.setGenero(genEnum);
 
-                                alterou = S.alterarMusica(musicaEsc, consi);
+                                alterou = S.alterarMusica(musicaEsc);
 
                                 if (alterou)
                                     System.out.println("Musica alterada com sucesso");

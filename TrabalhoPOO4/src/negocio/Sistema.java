@@ -22,6 +22,7 @@ public class Sistema {
         return instance;
     }
 
+    // MÉTODOS DE MÚSICA ----------------------------------------------------------------------------------
     public boolean adicionarMusica(Musica M) {
         return cMusica.add(M);
     }
@@ -58,8 +59,14 @@ public class Sistema {
         }
     }
 
-    public boolean alterarMusica(Musica musicaEsc, int consi) {
-        return cMusica.alterar(musicaEsc, consi);
+    public boolean alterarMusica(Musica musicaEsc) {
+        boolean alterou = cMusica.alterar(musicaEsc);
+
+        if (alterou) {
+            cPlaylist.atualizarMusica(musicaEsc);
+        }
+
+        return alterou;
     }
 
     public boolean excluirMusica(Musica M) {
@@ -67,10 +74,22 @@ public class Sistema {
 
         if (temAvalicao) {
             ArrayList<Avaliacao> copiaA = pegarVetorAvaliacoes();
+            ArrayList<Playlist> copiaP = pegarVetorPlaylists();
 
             for (int i = 0; i < copiaA.size(); i++) {
                 if (copiaA.get(i).getMusica().getId() == M.getId()) {
                     colocaAvaliacaoComMusicaExcluida(copiaA.get(i).getId());
+                }
+            }
+        }
+
+        ArrayList<Playlist> copiaP = pegarVetorPlaylists();
+
+        for (int i = 0; i < copiaP.size(); i++) {
+            for (int j = 0; j < copiaP.get(i).getMusicas().size(); j++){
+                if (M.getId() == copiaP.get(i).getMusicas().get(j).getId()){
+                    remMusicaEmPlaylist(copiaP.get(i), M.getId());
+                    break;
                 }
             }
         }
@@ -217,10 +236,143 @@ public class Sistema {
         if (musicaEsc != null) {
             musicaEsc.setNotaAtual(novaNota);
             cMusica.atualizarNota(musicaEsc);
+            cPlaylist.atualizarMusica(musicaEsc);
         }
     }
 
     public boolean adicionarPlaylist(Playlist P, int idU) {
         return cPlaylist.add(P, idU);
+    }
+
+    public ArrayList<Playlist> pegarPlaylistsDeUsuario(Usuario U) {
+        ArrayList<Playlist> copiaP = pegarVetorPlaylists();
+        ArrayList<Playlist> doUsuario = new ArrayList<>();
+
+        for (int i = 0; i < copiaP.size(); i++){
+            if (U.getId() == copiaP.get(i).getUsuarioCriou().getId()){
+                doUsuario.add(copiaP.get(i));
+            }
+        }
+
+        return doUsuario;
+    }
+
+    private ArrayList<Playlist> pegarVetorPlaylists() {
+        return cPlaylist.pegarVetor();
+    }
+
+    public void exibirPlaylists(ArrayList<Playlist> playlists) {
+        for (int i = 0; i < playlists.size(); i++){
+            System.out.println("ID " + playlists.get(i).getId() + " | " + playlists.get(i).getUsuarioCriou().getNome());
+            System.out.println("NOME: " + playlists.get(i).getNome());
+            System.out.println("DESCRICAO: " + playlists.get(i).getDescricao());
+            System.out.println("QUANTIDADE DE MÚSICAS: " + playlists.get(i).getMusicas().size());
+            System.out.println();
+        }
+    }
+
+    public ArrayList<Musica> pegarMusicasNaoAdicionadas(Playlist P) {
+        ArrayList<Musica> copia = pegarVetorMusicas();
+        ArrayList<Musica> naoAdd = new ArrayList<>();
+
+        for (int i = 0; i < copia.size(); i++){
+            boolean adicionada = false;
+
+            for (int j = 0; j < P.getMusicas().size(); j++){
+                if (copia.get(i).getId() == P.getMusicas().get(j).getId()){
+                    adicionada = true;
+                    break;
+                }
+            }
+
+            if (!adicionada){
+                naoAdd.add(copia.get(i));
+            }
+        }
+
+        return naoAdd;
+    }
+
+    public void addMusicaEmPlaylist(Playlist p, Musica musicaEsc) {
+        cPlaylist.addMusica(p, musicaEsc);
+    }
+
+    public void remMusicaEmPlaylist(Playlist p, int idMusica) {
+        cPlaylist.remMusica(p, idMusica);
+    }
+
+    public ArrayList<Playlist> pegarPlaylistsDeUsuarioECompartilhadas(Usuario U) {
+        ArrayList<Playlist> playlist = new ArrayList<>();
+
+        ArrayList<Playlist> doUsuario = pegarPlaylistsDeUsuario(U);
+        ArrayList<Playlist> compartilhadas = pegarPlaylistsCompartilhadas(U);
+
+        playlist.addAll(doUsuario);
+        playlist.addAll(compartilhadas);
+
+        return playlist;
+    }
+
+    public ArrayList<Playlist> pegarPlaylistsCompartilhadas(Usuario U) {
+        ArrayList<Playlist> copiaP = pegarVetorPlaylists();
+        ArrayList<Playlist> compartilhadas = new ArrayList<>();
+
+        for (int i = 0; i < copiaP.size(); i++){
+            for (int j = 0; j < copiaP.get(i).getUsuariosCompartilhados().size(); j++){
+                if (U.getId() == copiaP.get(i).getUsuariosCompartilhados().get(j).getId()){
+                    compartilhadas.add(copiaP.get(i));
+                    break;
+                }
+            }
+        }
+
+        return compartilhadas;
+    }
+
+    public void exibirUsuarios(ArrayList<Usuario> U) {
+        String formato = "%-4s %-10s %-1s";
+        System.out.printf(formato, "ID", "NOME", "FUNÇÃO");
+        System.out.println();
+
+        for(int i = 0; i < U.size(); i++){
+            if (U.get(i).getFuncao() == 'O'){
+                System.out.printf(formato, U.get(i).getId(), U.get(i).getNome(), "Ouvinte");
+            } else {
+                System.out.printf(formato, U.get(i).getId(), U.get(i).getNome(), "Administrador");
+            }
+            System.out.println();
+        }
+    }
+
+    public ArrayList<Usuario> pegarUsuariosNaoCompartilhados(Playlist P, ArrayList<Usuario> todosUs) {
+        ArrayList<Usuario> usNaoCompartilhados = new ArrayList<>();
+
+        for (int i = 0; i < todosUs.size(); i++){
+            boolean compartilhado = false;
+            for (int j = 0; j < P.getUsuariosCompartilhados().size(); j++){
+                if (todosUs.get(i).getId() == P.getUsuariosCompartilhados().get(j).getId()){
+                    compartilhado = true;
+                    break;
+                }
+            }
+
+            if (!compartilhado){
+                usNaoCompartilhados.add(todosUs.get(i));
+            }
+        }
+
+        return usNaoCompartilhados;
+    }
+
+    public void CompartilharPlaylistComUsuario(Playlist P, Usuario U) {
+        cPlaylist.CompartilharComUsuario(P, U);
+    }
+
+    public boolean alterarPlaylist(Playlist P, int idU) {
+        return cPlaylist.alterar(P, idU);
+    }
+
+    public boolean excluirPlaylist(Playlist P) {
+        return cPlaylist.excluir(P);
     }
 }

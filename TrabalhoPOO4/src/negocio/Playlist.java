@@ -23,11 +23,30 @@ public class Playlist {
         UsuarioCriou = new Usuario(u);
     }
 
+    public Playlist(Playlist p) {
+        id = p.id;
+        nome = p.nome;
+        descricao = p.descricao;
+        UsuarioCriou = new Usuario(p.UsuarioCriou);
+
+        musicas = new ArrayList<>();
+
+        for (int i = 0; i < p.musicas.size(); i++){
+            musicas.add(new Musica(p.musicas.get(i)));
+        }
+
+        UsuariosCompartilhados = new ArrayList<>();
+
+        for (int i = 0; i < p.UsuariosCompartilhados.size(); i++){
+            UsuariosCompartilhados.add(new Usuario(p.UsuariosCompartilhados.get(i)));
+        }
+    }
+
     public static Playlist getInstance(String nome, String descricao, Usuario u) {
         if (nome.isEmpty() || descricao.isEmpty()){
-            return new Playlist(nome, descricao, u);
-        } else {
             return null;
+        } else {
+            return new Playlist(nome, descricao, u);
         }
     }
 
@@ -48,10 +67,18 @@ public class Playlist {
     }
 
     public Usuario getUsuarioCriou() {
-        return UsuarioCriou;
+        return new Usuario(UsuarioCriou);
     }
 
     public ArrayList<Usuario> getUsuariosCompartilhados() {
         return UsuariosCompartilhados;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }

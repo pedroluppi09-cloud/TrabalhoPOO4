@@ -25,7 +25,7 @@ public class controleMusica {
         return rMusica.getMusicas();
     }
 
-    public boolean alterar(Musica M, int consi) {
+    public boolean alterar(Musica M) {
         if (rMusica.encontrarMusicaNomeArtistaIguais(M, 'E')){
             System.out.println("Não é possível alterar a musica (Música já cadastrada)");
             return false;

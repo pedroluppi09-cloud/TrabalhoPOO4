@@ -60,17 +60,7 @@ public class Main {
             switch (opcao){
                 case 1:
                     //Selecionar o Usuário
-                    String formato = "%-4s %-10s %-1s";
-                    System.out.printf(formato, "ID", "NOME", "FUNÇÃO");
-                    System.out.println();
-                    for(int i = 0; i < U.size(); i++){
-                        if (U.get(i).getFuncao() == 'O'){
-                            System.out.printf(formato, U.get(i).getId(), U.get(i).getNome(), "Ouvinte");
-                        } else {
-                            System.out.printf(formato, U.get(i).getId(), U.get(i).getNome(), "Administrador");
-                        }
-                        System.out.println();
-                    }
+                    S.exibirUsuarios(U);
                     System.out.println("--------------------------------------------");
 
                     boolean existe = false;

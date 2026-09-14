@@ -48,7 +48,7 @@ public class repositorioAvaliacao {
     public void setExcluidoEmMusica(int id) {
         for (int i = 0; i < avaliacoes.size(); i++){
             if (avaliacoes.get(i).getMusica().getId() == id){
-                avaliacoes.get(i).getMusica().setExcluido(true);
+                avaliacoes.get(i).setMusicaExcluida();
             }
         }
     }
