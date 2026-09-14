@@ -347,4 +347,12 @@ public class Sistema {
     public void CompartilharPlaylistComUsuario(Playlist P, Usuario U) {
         cPlaylist.CompartilharComUsuario(P, U);
     }
+
+    public boolean alterarPlaylist(Playlist P, int idU) {
+        return cPlaylist.alterar(P, idU);
+    }
+
+    public boolean excluirPlaylist(Playlist P) {
+        return cPlaylist.excluir(P);
+    }
 }

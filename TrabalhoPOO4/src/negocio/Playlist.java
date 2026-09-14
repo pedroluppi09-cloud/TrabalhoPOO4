@@ -73,4 +73,12 @@ public class Playlist {
     public ArrayList<Usuario> getUsuariosCompartilhados() {
         return UsuariosCompartilhados;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 }

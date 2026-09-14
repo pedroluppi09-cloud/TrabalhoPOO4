@@ -9,11 +9,20 @@ import java.util.ArrayList;
 public class repositorioPlaylist {
     ArrayList<Playlist> playlists = new ArrayList<>();
 
-    public boolean encontrarPlaylistNomeIgual(Playlist P, int idU) {
-        for (int i = 0; i < playlists.size(); i++){
-            if (playlists.get(i).getUsuarioCriou().getId() == idU &&
-                    P.getNome().equalsIgnoreCase(playlists.get(i).getNome())){
-                return true;
+    public boolean encontrarPlaylistNomeIgual(Playlist P, int idU, char funcao) {
+        if (funcao == 'C'){
+            for (int i = 0; i < playlists.size(); i++){
+                if (playlists.get(i).getUsuarioCriou().getId() == idU &&
+                        P.getNome().equalsIgnoreCase(playlists.get(i).getNome())){
+                    return true;
+                }
+            }
+        } else {
+            for (int i = 0; i < playlists.size(); i++){
+                if (playlists.get(i).getUsuarioCriou().getId() == idU &&
+                        P.getNome().equalsIgnoreCase(playlists.get(i).getNome()) && P.getId() != playlists.get(i).getId()){
+                    return true;
+                }
             }
         }
 
@@ -63,6 +72,24 @@ public class repositorioPlaylist {
         for (int i = 0; i < playlists.size(); i++){
             if (playlists.get(i).getId() == p.getId()){
                 playlists.get(i).getUsuariosCompartilhados().add(u);
+                break;
+            }
+        }
+    }
+
+    public void edit(Playlist P) {
+        for (int i = 0; i < playlists.size(); i++){
+            if (playlists.get(i).getId() == P.getId()){
+                playlists.set(i, P);
+                break;
+            }
+        }
+    }
+
+    public void excluir(Playlist P) {
+        for (int i = 0; i < playlists.size(); i++){
+            if (playlists.get(i).getId() == P.getId()){
+                playlists.remove(i);
                 break;
             }
         }

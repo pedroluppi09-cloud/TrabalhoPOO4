@@ -1,9 +1,6 @@
 package ui;
 
-import negocio.Musica;
-import negocio.Playlist;
-import negocio.Sistema;
-import negocio.Usuario;
+import negocio.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -59,10 +56,94 @@ public class UIplaylists {
                     } while (!adicionou);
                     break;
                 }
-                case 2:{
+                case 2: {
+                    boolean existe = false;
+                    int idPlaylist;
+                    Playlist playlistEsc = null;
+
+                    ArrayList<Playlist> PlaylistsdoUsuario = S.pegarPlaylistsDeUsuario(U);
+                    S.exibirPlaylists(PlaylistsdoUsuario);
+
+                    System.out.println("Escolha o ID da playlist que deseja alterar");
+
+                    do {
+                        idPlaylist = scn.nextInt();
+
+                        for (int i = 0; i < PlaylistsdoUsuario.size(); i++) {
+                            if (PlaylistsdoUsuario.get(i).getId() == idPlaylist) {
+                                existe = true;
+                                playlistEsc = PlaylistsdoUsuario.get(i);
+                                break;
+                            }
+                        }
+
+                        if (!existe)
+                            System.out.println("Insira um ID válido");
+
+                    } while (!existe);
+
+                    String nome;
+                    String descricao;
+                    scn.nextLine();
+
+                    boolean alterou = false;
+
+                    do {
+                        do {
+                            System.out.println("Nome da Playlist [" + playlistEsc.getNome() + "]:");
+                            nome = scn.nextLine();
+                        } while (nome.isEmpty());
+
+                        do {
+                            System.out.println("Descricao:");
+                            descricao = scn.nextLine();
+                        } while (descricao.isEmpty());
+
+                        playlistEsc.setNome(nome);
+                        playlistEsc.setDescricao(descricao);
+
+                        alterou = S.alterarPlaylist(playlistEsc, U.getId());
+                    } while (!alterou);
+
                     break;
                 }
                 case 3: {
+                    boolean existe = false;
+                    int idPlaylist;
+                    Playlist playlistEsc = null;
+
+                    ArrayList<Playlist> PlaylistsdoUsuario = S.pegarPlaylistsDeUsuario(U);
+                    S.exibirPlaylists(PlaylistsdoUsuario);
+
+                    System.out.println("Escolha o ID da playlist que deseja excluir");
+
+                    do {
+                        idPlaylist = scn.nextInt();
+
+                        for (int i = 0; i < PlaylistsdoUsuario.size(); i++) {
+                            if (PlaylistsdoUsuario.get(i).getId() == idPlaylist) {
+                                existe = true;
+                                playlistEsc = PlaylistsdoUsuario.get(i);
+                                break;
+                            }
+                        }
+
+                        if (!existe)
+                            System.out.println("Insira um ID válido");
+
+                    } while (!existe);
+
+                    String nome;
+                    String descricao;
+
+                    boolean excluiu = S.excluirPlaylist(playlistEsc);
+
+                    if (!excluiu){
+                        System.out.println("Ocorreu algum erro na exclusão");
+                    } else {
+                        System.out.println("Playlist excluída com sucesso");
+                    }
+
                     break;
                 }
                 case 4: {
@@ -92,9 +173,9 @@ public class UIplaylists {
                                 System.out.println("Insira um ID válido");
 
                         } while (!existe);
-                    }
 
-                    uiPM.menuPrincipal(PlayEscolhida);
+                        uiPM.menuPrincipal(PlayEscolhida);
+                    }
                     break;
                 }
                 case 5: {
@@ -211,9 +292,6 @@ public class UIplaylists {
                             System.out.println("Compartilhamento feito com sucesso");
                         }
                     }
-
-                    S.exibirUsuarios(TodosUs);
-
                     break;
                 }
                 default: {
